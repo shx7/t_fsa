@@ -1,22 +1,33 @@
 CC=g++
+INCLUDE_DIR=./headers
+CFLAGS=-I $(INCLUDE_DIR) -o ../bin/t_fsa.elf
+
+TRANSITION_MATRIX_DIR=./transition_matrix
+TRANSITION_MATRIX_OBJS=$(TRANSITION_MATRIX_DIR)/Transition.o $(TRANSITION_MATRIX_DIR)/TransitionRow.o $(TRANSITION_MATRIX_DIR)/TransitionMatrix.o
+
+LEXER_DIR=./lexer
+LEXER_OBJS=$(LEXER_DIR)/Lexer.o
+
+ENGINE_DIR=./engine
+ENGINE_OBJS=$(ENGINE_DIR)/Engine.o
 
 all: main
 
-main: lexer transition_matrix
-	$(CC) main.cpp Lexer.o Transition.o TransitionRow.o TransitionMatrix.o -o t_fsa.elf
+main: lexer transition_matrix engine
+	$(CC) main.cpp $(ENGINE_OBJS) $(LEXER_OBJS) $(TRANSITION_MATRIX_OBJS) $(CFLAGS)
 
 lexer:
-	$(CC) Lexer.cpp -c
+	$(MAKE) -I ./lexer
 
-transition_matrix: transition transition_row
-	$(CC) TransitionMatrix.cpp -c
+transition_matrix:
+	$(MAKE) -I $(TRANSITION_MATRIX_DIR)
 
-transition:
-	$(CC) Transition.cpp -c
+engine:
+	$(MAKE) -I $(ENGINE_DIR)
 
-transition_row:
-	$(CC) TransitionRow.cpp -c
+run:
+	../bin/t_fsa.elf
 
 clean:
-	rm *.o
-	rm *.elf
+	find ./ -name "*.o" -exec rm {} \;
+	rm ./bin/*.elf
