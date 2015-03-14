@@ -15,14 +15,15 @@ using namespace std;
 typedef unsigned long StateID;
 
 struct State {
-    StateID id_;
-    string  name_;
+    public:
+        StateID id_;
+        string  name_;
 
-    State(StateID id, string name) : id_(id), name_(name) {};
+        State(StateID id, string name) : id_(id), name_(name) {};
 
-    void print() {
-        cout << "State: \"" << name_ << "\", id: " << id_ << endl;
-    }
+        void print() {
+            cout << "State: \"" << name_ << "\", id: " << id_ << endl;
+        }
 };
 
 typedef vector<char>       InputSequence;

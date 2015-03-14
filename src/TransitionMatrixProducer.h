@@ -5,21 +5,20 @@
 *            matrix will be used in AutomatonMachine
 *
 ***********************************************************/
-#ifndef STATE_TRANSITION_MATRIX_PRODUCER_H
-#define STATE_TRANSITION_MATRIX_PRODUCER_H
-class StateTransitionMatrixProducer {
+#ifndef TRANSITION_MATRIX_PRODUCER_H
+#define TRANSITION_MATRIX_PRODUCER_H
+class TransitionMatrixProducer {
     private:
 
     public:
-        StateMatrixProducer() {
-        }
+        void addTransition(State& start_state,
+                char input, 
+                State& end_state) {
 
-        void addTransition(State& state,
-                InputSequence& input, 
-                StateSequence& transition_states) {
         }
 
         TransitionMatrix* produceMatrix() {
+            return new TransitionMatrix();
         }
 }
 #endif

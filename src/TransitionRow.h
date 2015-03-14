@@ -19,14 +19,26 @@ class TransitionRow {
     private:
         vector<Transition> transition_seq_;
         State              start_state_; 
-        void addTransition(Transition& transition);
 
     public:
         TransitionRow(State& start_state) : start_state_(start_state) {}; 
 
         void addTransition(char input, State& end_state); 
 
+        bool isTransitionExists(
+                string& start_state_name,
+                string& end_state_name); 
+
+        State getStartState();
+
         void print();
+
+    private:
+        void addTransition(Transition& transition);
+
+        bool isTransitionExists(Transition& transition);
+
+        Transition* findTransition(string& end_state_name);
 }; 
 
 #endif 

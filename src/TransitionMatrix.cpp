@@ -15,13 +15,16 @@ void TransitionMatrix::addTransition(
         char    input,
         string& end_state_name)
 {
-    if (!isRowExists(start_state_name)) { 
+    /*if (!isRowExists(start_state_name)) { 
         createRow(start_state_name);
     } 
 
     if (!isRowExists(end_state_name)) {
         createRow(end_state_name);
-    } 
+    }*/
+
+    addRow(start_state_name);
+    addRow(end_state_name);
 
     createTransition(
             start_state_name,
@@ -30,7 +33,9 @@ void TransitionMatrix::addTransition(
 }
 
 void TransitionMatrix::addRow(string& start_state_name) {
-    createRow(start_state_name);
+    if (!isRowExists(start_state_name)) {
+        createRow(start_state_name);
+    }
 }
 
 void TransitionMatrix::print() {
@@ -67,6 +72,8 @@ void TransitionMatrix::createTransition(
         char    input,
         string& end_state_name)
 {
+    State end_state = transition_row_table_[end_state_name]->getStartState();
+    transition_row_table_[start_state_name]->addTransition(input, end_state);
 }
 
 // Due to Map connects state string names
@@ -78,5 +85,4 @@ void TransitionMatrix::createTransition (
         char input,
         TransitionRow* end_row) 
 { 
-}
-
+} 

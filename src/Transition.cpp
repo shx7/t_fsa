@@ -9,6 +9,7 @@ void Transition::print() {
 
     cout << "Driven by chars: " << endl;
     printInputSequence();
+    cout << endl;
 }
 
 void Transition::addInputChar(char input) {
@@ -17,6 +18,10 @@ void Transition::addInputChar(char input) {
 
 void Transition::printInputSequence() {
     InputSequence::iterator itr;
+    if (input_seq_.size() == 0) {
+        cout << "Char sequence is null" << endl;
+    }
+
     for (itr = input_seq_.begin(); itr != input_seq_.end(); itr++) {
         cout << *itr << ", ";
     }

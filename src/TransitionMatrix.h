@@ -30,6 +30,7 @@ class TransitionMatrix {
     public:
         TransitionMatrix() : state_count_(0) {}
 
+        // I think it will be unused
         void addTransition(
                 char* start_state_name,
                 char  input,
