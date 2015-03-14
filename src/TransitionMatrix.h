@@ -41,6 +41,11 @@ class TransitionMatrix {
                 char    input,
                 string& end_state_name);
 
+        /*void addTransition(
+                State& start_state,
+                char    input,
+                State& end_state); */
+
         void addRow(string& start_state_name);
 
         void print();
@@ -54,15 +59,6 @@ class TransitionMatrix {
                 string& start_state_name,
                 char    input,
                 string& end_state_name);
-
-        // Due to Map connects state string names
-        // and related Row's transition created
-        // between Row's, not states. It is not bug,
-        // feature
-        void createTransition (
-                TransitionRow* start_row,
-                char input,
-                TransitionRow* end_row);
 };
 
 #endif

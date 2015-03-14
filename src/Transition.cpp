@@ -13,6 +13,7 @@ void Transition::print() {
 }
 
 void Transition::addInputChar(char input) {
+    cout << "Transition::adding character " << input << endl;
     input_seq_.push_back(input);
 }
 

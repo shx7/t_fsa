@@ -14,15 +14,42 @@ using namespace std;
 
 typedef unsigned long StateID;
 
+enum StateType {
+    STATE_START,
+    STATE_FINAL,
+    STATE_ORDINARY
+};
+
 struct State {
     public:
-        StateID id_;
-        string  name_;
+        StateID   id_;
+        string    name_;
+        StateType type_;
 
-        State(StateID id, string name) : id_(id), name_(name) {};
+        State(StateID id, string name) : id_(id), name_(name), type_(STATE_ORDINARY) {};
 
         void print() {
             cout << "State: \"" << name_ << "\", id: " << id_ << endl;
+            cout << "state type: ";
+            printStateType();
+            cout << endl;
+        }
+
+    private:
+        void printStateType() {
+            switch (type_) {
+                case STATE_START:
+                    cout << "Start"; 
+                    break;
+
+                case STATE_FINAL:
+                    cout << "Finish";
+                    break;
+
+                case STATE_ORDINARY:
+                    cout << "Oridnary";
+                    break;
+            }
         }
 };
 

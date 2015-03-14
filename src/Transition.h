@@ -29,14 +29,6 @@ class Transition {
 
         void addInputChar(char input);
 
-        bool operator==(const Transition& transition) {
-            /*if ((transition.start_state_ == start_state_) && 
-                (transition.end_state_ == end_state_)) {
-                return true;
-            }*/
-            return false;
-        }
-
         State* getStartState() {
             return &start_state_;
         }
