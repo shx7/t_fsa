@@ -15,75 +15,53 @@
 
 #include <vector>
 #include <list>
+#include <iostream>
+#include <map>
+
+#include "TransitionRow.h"
 
 using namespace std;
 
-namespace transition {
+class TransitionMatrix {
+    private:
+        map<string, TransitionRow*> transition_row_table_; // string and states relation
+        long                        state_count_;
 
-    typedef unsigned long StateID;
+    public:
+        TransitionMatrix() : state_count_(0) {}
 
-    struct State {
-        StateID id_; // Also number of row in matrix
-        string name_;
+        void addTransition(
+                char* start_state_name,
+                char  input,
+                char* end_state_name);
+        
+        void addTransition(
+                string& start_state_name,
+                char    input,
+                string& end_state_name);
 
-        State(StateID id, string name) : id_(id), name_(name) {};
-    };
+        void addRow(string& start_state_name);
 
-    typedef vector<char> InputSequence;
-    typedef vector<State> StateSequence;
+        void print();
 
-    class Row {
-        State state_;
-        InputSequence input_seq;
-        StateSequence state_transition_seq;
+    private:
+        bool isRowExists(string st_name);
+       
+        void createRow(string state_name);
 
-        // DEBUG feature
-        void print() {
-        }
-    }; 
+        void createTransition(
+                string& start_state_name,
+                char    input,
+                string& end_state_name);
 
-    class Matrix {
-        private:
-            list<Row>             matrix_;
-            map<string, State*>   state_map_; // for detecting row to modify
-            long                  state_count_;
-
-        public:
-            void addTransition(
-                    string& start_state_name,
-                    char input_,
-                    string& end_state_name)
-            {
-                if (isStateExists(start_state_name)) {
-                    createRow(start_state_name);
-                } 
-
-                if (isStateExists(end_state_name)) {
-                    createRow(start_state_name);
-                } 
-            }
-
-            // *DEBUG*
-            void print() {
-            }
-
-        private:
-            bool isStateExists(string& st_name) {
-                return false;
-            }
-
-            void createRow(string& state_name) {
-                state_map_[state_name] = new State(state_count_, state_name);
-                state_count_++;
-            }
-
-            void addTransitionToRow(
-                    StateID start_state_id,
-                    char input_,
-                    StateID end_state_id) 
-            {
-            }
-    };
-}
+        // Due to Map connects state string names
+        // and related Row's transition created
+        // between Row's, not states. It is not bug,
+        // feature
+        void createTransition (
+                TransitionRow* start_row,
+                char input,
+                TransitionRow* end_row);
+};
 
 #endif
