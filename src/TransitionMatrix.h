@@ -30,35 +30,17 @@ class TransitionMatrix {
     public:
         TransitionMatrix() : state_count_(0) {}
 
-        // I think it will be unused
         void addTransition(
-                char* start_state_name,
-                char  input,
-                char* end_state_name);
-        
-        void addTransition(
-                string& start_state_name,
-                char    input,
-                string& end_state_name);
-
-        /*void addTransition(
                 State& start_state,
                 char    input,
-                State& end_state); */
-
-        void addRow(string& start_state_name);
+                State& end_state);
 
         void print();
 
     private:
-        bool isRowExists(string st_name);
-       
-        void createRow(string state_name);
+        void addRow(State& state);
 
-        void createTransition(
-                string& start_state_name,
-                char    input,
-                string& end_state_name);
+        bool isRowExists(State& state);
 };
 
 #endif

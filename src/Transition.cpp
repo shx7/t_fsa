@@ -1,7 +1,7 @@
 #include "Transition.h"
 
 void Transition::print() {
-    cout << "Transition from: " << endl;
+    cout << endl << "->TRANSITION from: " << endl;
     printStartState();
 
     cout << "to: " << endl;
@@ -13,7 +13,6 @@ void Transition::print() {
 }
 
 void Transition::addInputChar(char input) {
-    cout << "Transition::adding character " << input << endl;
     input_seq_.push_back(input);
 }
 
@@ -24,7 +23,12 @@ void Transition::printInputSequence() {
     }
 
     for (itr = input_seq_.begin(); itr != input_seq_.end(); itr++) {
-        cout << *itr << ", ";
+        if (*itr == NULL_CHARACTER) {
+            cout << "NULL_CHARACTER";
+        } else {
+            cout << (*itr);
+        }
+        cout << ", ";
     }
 }
 
