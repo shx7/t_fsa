@@ -10,6 +10,8 @@
 #include <string>
 #include <iostream>
 
+#define NULL_CHARACTER 0
+
 using namespace std;
 
 typedef unsigned long StateID;
@@ -26,7 +28,7 @@ struct State {
         string    name_;
         StateType type_;
 
-        State(StateID id, string name) : id_(id), name_(name), type_(STATE_ORDINARY) {};
+        State(string name, StateType type = STATE_ORDINARY, StateID id = -1) : id_(id), name_(name), type_(type) {};
 
         void print() {
             cout << "State: \"" << name_ << "\", id: " << id_ << endl;

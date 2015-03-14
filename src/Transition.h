@@ -24,7 +24,6 @@ class Transition {
                 start_state_(start_state),
                 end_state_(end_state) {}
 
-        // DEBUG feature
         void print();
 
         void addInputChar(char input);
@@ -42,15 +41,7 @@ class Transition {
         
         void printStartState();
 
-        void printEndState();
-
-        /*void printStateSequence() {
-            StateSequence::iterator itr;
-            cout << "State sequence: " << endl;
-            for (itr = state_transition_seq_.begin(); itr != state_transition_seq_.end(); itr++) {
-                (*itr).print();
-            } 
-        }*/
+        void printEndState(); 
 }; 
 
 #endif

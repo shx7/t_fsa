@@ -2,13 +2,14 @@
 
 void TransitionRow::print() {
     TransitionSequence::iterator itr;
-    cout << "Row represents state: ";
+    cout << endl << ">ROW represents STATE: " << endl;
     start_state_.print();
-    cout << " consists of: " << endl;
+    cout << "CONSISTS of: " << endl;
     for (itr = transition_seq_.begin(); itr != transition_seq_.end(); itr++) 
     {
         (*itr).print();
     }
+    cout << "--------------END Row print-------------" << endl;
 } 
         
 void TransitionRow::addTransition(char input, State& end_state) {
