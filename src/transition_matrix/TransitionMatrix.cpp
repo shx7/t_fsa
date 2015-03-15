@@ -46,3 +46,9 @@ bool TransitionMatrix::isRowExists(State& state) {
 
     return true; 
 } 
+
+TransitionRow* 
+TransitionMatrix::getTransition(string& current_state_name, char input) {
+    // Search for transition
+    return NULL;
+}

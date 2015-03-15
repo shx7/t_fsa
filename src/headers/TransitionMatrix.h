@@ -39,6 +39,8 @@ class TransitionMatrix {
 
         TransitionRow* getStartStateRow();
 
+        TransitionRow* getTransition(string& current_state_name, char input);
+
     private:
         void addRow(State& state);
 

@@ -28,7 +28,7 @@ struct State {
         string    name_;
         StateType type_;
 
-        State(string name, StateType type = STATE_ORDINARY, StateID id = -1) : id_(id), name_(name), type_(type) {};
+        State(string name = "", StateType type = STATE_ORDINARY, StateID id = -1) : name_(name), type_(type), id_(id) {};
 
         void print() {
             cout << "State: \"" << name_ << "\", id: " << id_ << endl;

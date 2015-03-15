@@ -12,20 +12,21 @@
 #define ENGINE_H
 
 #include "TransitionMatrix.h"
-#include "Engine.h"
+#include "TransitionMatrixTypes.h"
 
 struct EngineReport {
-    State* finished_state;
-    bool   sequence_recognized;
+    State finish_state;
+    bool  is_sequence_recognized;
 
-    EngineReport() : sequence_recognized(false) {};
+    EngineReport() : is_sequence_recognized(false) {};
 };
 
 class Engine {
     private:
-        TransitionRow*          start_state_;
-        TransitionRow*          end_state_;
+        TransitionRow*          start_state_row_;
+        TransitionRow*          current_state_row_;
         InputSequence::iterator current_input_;
+        InputSequence           input_;
 
     public:
         EngineReport* run(TransitionMatrix& matrix, InputSequence& input);
@@ -33,10 +34,16 @@ class Engine {
         void printReport(EngineReport* report); 
 
     private:
-        void step();
+        void step(char input);
 
         void initRun(TransitionMatrix& matrix, InputSequence& input);
 
-        void printProgress();
+        void printCurrentState();
+
+        TransitionRow* getNextStateRow(char input);
+
+        char getNextInput();
+
+        EngineReport* formReport();
 };
 #endif
