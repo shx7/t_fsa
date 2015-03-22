@@ -49,9 +49,17 @@ void TransitionGraph::addState(State& state) {
     state_node_table_[state.name_] = state_node;
 }
 
-// FIX HERE
+// Return new state
 State* TransitionGraph::getNextState(string& name, char input) {
-    return new State(name);
+    StateNode *node = findStateNode(name);
+    StateNode *next_node;
+    if (node != NULL) {
+        next_node = node->getNextNode(input);
+        if (next_node != NULL) {
+            return new State(next_node->getNodeName(), next_node->getNodeType()); 
+        }
+    }
+    return NULL;
 }
 
 void TransitionGraph::print() {
@@ -61,3 +69,13 @@ void TransitionGraph::print() {
         cout << "------------------------" << endl;
     }
 } 
+
+State* TransitionGraph::getStartState() {
+    map<string, StateNode>::iterator itr;
+    for (itr = state_node_table_.begin(); itr != state_node_table_.end(); itr++) {
+        if (itr->second.getNodeType() == STATE_START) {
+            return new State(itr->second.getNodeName(), itr->second.getNodeType());
+        }
+    }
+   return NULL; 
+}

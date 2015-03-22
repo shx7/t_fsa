@@ -22,8 +22,9 @@ class TransitionGraph {
         void addState(string& name, StateType type); 
         void addState(State& state);
 
-        // Allocates new State
-        State* getNextState(string& name, char input);
+        // Returns new allocated State. Memory should be freed
+        State* getNextState(string& name, char input); 
+        State* getStartState();
 
         void print();
 

@@ -31,6 +31,8 @@ struct State {
 
         State(string name = "", StateType type = STATE_ORDINARY, StateID id = -1) : name_(name), type_(type), id_(id) {};
 
+        State(const State& state) : name_(state.name_), type_(state.type_), id_(0) {};
+
         bool operator==(State& state) {
             if (name_ == state.name_) {
                 return true;

@@ -1,4 +1,53 @@
 #include "Engine.h"
+
+EngineReport* Engine::run(TransitionGraph& graph, InputSequence& input) {
+    initRun(graph, input);
+    while (current_character_ != NULL_CHARACTER) {
+        step();
+        current_character_ = getNextCharacter();
+    }
+}
+
+void Engine::step() {
+    State* tmp = current_state_;
+    current_state_ = graph_.getNextState(current_state_->name_, current_character_);
+    delete tmp; // Deallocation last state*/
+}
+
+void Engine::initRun(TransitionGraph& graph, InputSequence& input) {
+    graph_ = graph;
+    input_ = input;
+    current_state_ = graph_.getStartState();
+    current_character_ = getNextCharacter();
+}
+
+void Engine::printCurrentState() {
+    if (current_state_ != NULL) {
+        current_state_->print();
+    } else {
+        cerr << "Engine::printCurrentState() NULL current_state_" << endl;
+    }
+}
+
+EngineReport* Engine::formReport() {
+    EngineReport *report = new EngineReport();
+    report->finish_state = current_state_; 
+    if (current_state_->type_ == STATE_FINAL) {
+        report->is_sequence_recognized = true;
+    } else {
+        report->is_sequence_recognized = false;
+    }
+}
+
+char Engine::getNextCharacter() {
+    char result;
+    if (current_input_ == input_.end()) {
+        return NULL_CHARACTER;
+    }
+    result = *current_input_;
+    current_input_++;
+    return result;
+}
 /*
 EngineReport* Engine::run(TransitionMatrix& matrix, InputSequence& input) {
     initRun(matrix, input);
