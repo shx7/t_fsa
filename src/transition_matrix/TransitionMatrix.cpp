@@ -10,6 +10,17 @@ void TransitionMatrix::addTransition(
     transition_row_table_[start_state.name_]->addTransition(input, end_state);
 }
 
+bool TransitionMatrix::isRowExists(State& state) {
+    map<string, TransitionRow*>::iterator itr;
+    itr = transition_row_table_.find(state.name_);
+
+    if (itr == transition_row_table_.end()) {
+        return false;
+    }
+
+    return true; 
+}
+
 void TransitionMatrix::addRow(State& state) {
     if (!isRowExists(state)) {
         state.id_ = state_count_;
@@ -23,32 +34,35 @@ void TransitionMatrix::print() {
     for (itr = transition_row_table_.begin(); itr != transition_row_table_.end(); itr++) {
         itr->second->print();
     }
-} 
-
-TransitionRow* TransitionMatrix::getStartStateRow() {
-    map<string, TransitionRow*>::iterator itr;
-    State* result;
-    for (itr = transition_row_table_.begin(); itr != transition_row_table_.end(); itr++) {
-        if (itr->second->isStartingStateRow()) {
-            return itr->second;
-        }
-    }
-    return NULL;
 }
 
-bool TransitionMatrix::isRowExists(State& state) {
+State TransitionMatrix::getStartState() {
     map<string, TransitionRow*>::iterator itr;
-    itr = transition_row_table_.find(state.name_);
-
-    if (itr == transition_row_table_.end()) {
-        return false;
+    for (itr = transition_row_table_.begin(); itr != transition_row_table_.end(); itr++) {
+        if (itr->second->isStartingStateRow()) {
+            return itr->second->getState();
+        }
     }
-
-    return true; 
+    return getIllegalState();
 } 
 
-TransitionRow* 
-TransitionMatrix::getTransition(string& current_state_name, char input) {
-    // Search for transition
-    return NULL;
+State TransitionMatrix::getNextState(State& current_state, char input) {
+    map<string, TransitionRow*>::iterator itr;
+    itr = transition_row_table_.find(current_state.name_);
+    if (itr == transition_row_table_.end()) {
+        return getIllegalState();
+    }
+
+    if ((itr->second)->isTransitionExists(current_state.name_, input)) {
+        return (itr->second)->getTransitionState(current_state, input);
+    }
+    return getIllegalState();
+}
+
+void TransitionMatrix::createIllegalState() {
+    illegal_state_ = new State("illegal_state", STATE_ORDINARY);
+}
+
+State TransitionMatrix::getIllegalState() {
+    return *illegal_state_;
 }

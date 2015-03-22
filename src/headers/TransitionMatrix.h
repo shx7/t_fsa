@@ -26,9 +26,12 @@ class TransitionMatrix {
     private:
         map<string, TransitionRow*> transition_row_table_; // string and states relation
         long                        state_count_;
+        State*                      illegal_state_;
 
     public:
-        TransitionMatrix() : state_count_(0) {}
+        TransitionMatrix() : state_count_(0) {
+            createIllegalState();
+        }
 
         void addTransition(
                 State& start_state,
@@ -37,14 +40,18 @@ class TransitionMatrix {
 
         void print();
 
-        TransitionRow* getStartStateRow();
+        State getStartState();
 
-        TransitionRow* getTransition(string& current_state_name, char input);
+        State getNextState(State& state, char input);
 
     private:
         void addRow(State& state);
 
         bool isRowExists(State& state);
+
+        void createIllegalState();
+
+        State getIllegalState();
 };
 
 #endif

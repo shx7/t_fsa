@@ -40,4 +40,12 @@ void Transition::printEndState() {
     end_state_.print();
 }
 
-
+bool Transition::isInputExists(char input) {
+    InputSequence::iterator itr;
+    for (itr = input_seq_.begin(); itr != input_seq_.end(); itr++) {
+        if ((*itr) == input) {
+            return true;
+        }
+    }
+    return false;
+}

@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <iostream>
-#include "Lexer.h"
-#include "TransitionMatrix.h"
+//#include "Lexer.h"
+#include "TransitionMatrixTypes.h"
 #define DEBUG
 
 using namespace std;
 
 int main(int argc, char** argv) {
-    TransitionMatrix matrix;
+    /*TransitionMatrix matrix;
     State state1("first_state", STATE_START);
     State state2("second state", STATE_ORDINARY);
     State state3("third statte", STATE_FINAL);
@@ -20,6 +20,11 @@ int main(int argc, char** argv) {
     matrix.addTransition(state3, 'g', state4);
     #ifdef DEBUG
     matrix.print();
-    #endif
+    #endif*/
+    State state1("asd", STATE_START);
+    State state2("aasd", STATE_START);
+    State state3("aasd", STATE_START);
+    State state4("asd", STATE_ORDINARY);
+    cout << (state1 == state4) << endl;
     return 0;
 }

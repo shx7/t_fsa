@@ -1,5 +1,5 @@
 #include "Engine.h"
-
+/*
 EngineReport* Engine::run(TransitionMatrix& matrix, InputSequence& input) {
     initRun(matrix, input);
     char next_char = getNextInput(); 
@@ -57,3 +57,4 @@ EngineReport* Engine::formReport() {
     }
     return report;
 }
+*/

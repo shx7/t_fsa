@@ -18,29 +18,36 @@ typedef vector<Transition> TransitionSequence;
 class TransitionRow {
     private:
         vector<Transition> transition_seq_;
-        State              start_state_; 
+        State              state_; 
 
     public:
-        TransitionRow(State& start_state) : start_state_(start_state) {}; 
+        TransitionRow(State& state) : state_(state) {}; 
 
         void addTransition(char input, State& end_state); 
 
         bool isTransitionExists(
                 string& start_state_name,
-                string& end_state_name); 
+                char input); 
 
-        State getStartState();
+        State getTransitionState(State& state, char input);
+
+        State getState();
 
         void print();
 
         bool isStartingStateRow();
 
     private:
+
         void addTransition(Transition& transition);
 
         bool isTransitionExists(Transition& transition);
 
-        Transition* findTransition(string& end_state_name);
+        bool isTransitionExists(
+                string& start_state_name,
+                string& end_state_name); 
+
+       Transition* findTransition(string& end_state_name);
 }; 
 
 #endif 

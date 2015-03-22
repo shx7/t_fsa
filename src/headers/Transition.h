@@ -36,6 +36,8 @@ class Transition {
             return &end_state_;
         }
 
+        bool isInputExists(char input);
+
     private:
         void printInputSequence();
         

@@ -3,7 +3,7 @@
 void TransitionRow::print() {
     TransitionSequence::iterator itr;
     cout << endl << ">ROW represents STATE: " << endl;
-    start_state_.print();
+    state_.print();
     cout << "CONSISTS of: " << endl;
     for (itr = transition_seq_.begin(); itr != transition_seq_.end(); itr++) 
     {
@@ -13,7 +13,7 @@ void TransitionRow::print() {
 } 
         
 void TransitionRow::addTransition(char input, State& end_state) {
-    Transition transition(start_state_, end_state);
+    Transition transition(state_, end_state);
 
     if (!isTransitionExists(transition)) {
         transition_seq_.push_back(transition);
@@ -38,16 +38,41 @@ bool TransitionRow::isTransitionExists(Transition& transition) {
 
 bool TransitionRow::isTransitionExists(
         string& start_state_name,
+        char input) 
+{
+    TransitionSequence::iterator itr;
+    for (itr = transition_seq_.begin(); itr != transition_seq_.end(); itr++) {
+        if ((*itr).getStartState()->name_ == start_state_name) {
+            return (*itr).isInputExists(input);
+        } 
+    }
+    return false; 
+} 
+
+// FIX Transiiton::getEndState
+State TransitionRow::getTransitionState(State& state, char input) {
+    TransitionSequence::iterator itr;
+    for (itr = transition_seq_.begin(); itr != transition_seq_.end(); itr++) {
+        if ((*itr).isInputExists(input)) {
+            return *((*itr).getEndState());
+        } 
+    } 
+}
+
+bool TransitionRow::isTransitionExists(
+        string& start_state_name,
         string& end_state_name) 
 {
     TransitionSequence::iterator itr;
     for (itr = transition_seq_.begin(); itr != transition_seq_.end(); itr++) {
         if (((*itr).getStartState()->name_ == start_state_name) &&
-           ((*itr).getEndState()->name_ == end_state_name)) return true;
-
+            ((*itr).getStartState()->name_ == end_state_name)) {
+            return true;
+        }
     }
+    
     return false; 
-} 
+}
 
 Transition* TransitionRow::findTransition(string& end_state_name) {
     TransitionSequence::iterator itr;
@@ -57,13 +82,16 @@ Transition* TransitionRow::findTransition(string& end_state_name) {
     return NULL;
 }
 
-State TransitionRow::getStartState() {
-    return start_state_;
+
+
+State TransitionRow::getState() {
+    return state_;
 }
 
 bool TransitionRow::isStartingStateRow() {
-    if (start_state_.type_ == STATE_START) {
+    if (state_.type_ == STATE_START) {
         return true;
     }
     return false;
 }
+

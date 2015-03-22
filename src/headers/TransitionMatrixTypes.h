@@ -37,6 +37,13 @@ struct State {
             cout << endl;
         }
 
+        bool operator==(State& state) {
+            if (name_ == state.name_) {
+                return true;
+            }
+            return false;
+        }
+
     private:
         void printStateType() {
             switch (type_) {
