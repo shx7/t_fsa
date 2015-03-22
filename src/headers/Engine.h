@@ -12,7 +12,10 @@
 #define ENGINE_H
 
 #include "TransitionGraph.h"
+#include <vector>
+#include <iostream>
 
+using namespace std;
 typedef vector<char> InputSequence;
 
 struct EngineReport {
@@ -22,7 +25,7 @@ struct EngineReport {
     EngineReport() : is_sequence_recognized(false) {};
 
     void print() {
-        cout << "Sequence " << (is_sequence_recognized ? "has" : "has not") << "been recognized" << endl;
+        cout << "Sequence " << (is_sequence_recognized ? "has" : "has not") << " been recognized" << endl;
         cout << "Recognition stops on state:" << endl;
         finish_state->print();
     }

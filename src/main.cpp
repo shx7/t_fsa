@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "TransitionGraph.h"
-#define DEBUG
+#include "Engine.h"
 
 using namespace std;
 
@@ -16,12 +16,16 @@ int main(int argc, char** argv) {
     graph.addTransition(state1, NULL_CHARACTER, state3);
     graph.addTransition(state1, 'c', state3);
     graph.addTransition(state1, 'd', state3);
-    #ifdef DEBUG
-    graph.print();
-    #endif
-    cout << "NEXT state" << endl;
-    string st1("first_state");
-    string st2("second state");
-    graph.getNextState(st2, 'a')->print();
+    Engine engine;
+    InputSequence input;
+    input.push_back('a');
+    input.push_back('a');
+    input.push_back('a');
+    input.push_back('a');
+    input.push_back('b');
+    input.push_back('a');
+    input.push_back('d');
+    EngineReport *report = engine.run(graph, input);
+    report->print();
     return 0;
 }
