@@ -25,6 +25,7 @@ int main(int argc, char** argv) {
     input.push_back('b');
     input.push_back('a');
     input.push_back('d');
+    input.push_back('f');
     EngineReport *report = engine.run(graph, input);
     report->print();
     return 0;

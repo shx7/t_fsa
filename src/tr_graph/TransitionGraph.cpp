@@ -59,7 +59,7 @@ State* TransitionGraph::getNextState(string& name, char input) {
             return new State(next_node->getNodeName(), next_node->getNodeType()); 
         }
     }
-    return NULL;
+    return illegal_state_;
 }
 
 void TransitionGraph::print() {
@@ -77,5 +77,9 @@ State* TransitionGraph::getStartState() {
             return new State(itr->second.getNodeName(), itr->second.getNodeType());
         }
     }
-   return NULL; 
+   return illegal_state_;
+}
+
+void TransitionGraph::initIllegalState() {
+    illegal_state_ = new State("STATE_ILLEGAL", STATE_ORDINARY);
 }
