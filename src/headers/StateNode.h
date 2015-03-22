@@ -10,6 +10,7 @@
 
 #include "State.h"
 #include <vector>
+#include <iostream>
 
 using namespace std; 
 
@@ -23,9 +24,20 @@ class StateNode {
                 Transition() : node_(NULL), input_(NULL_CHARACTER) {}
 
                 void print() {
-                    /*cout << "Link by character: \'" << 
-                        (input_ == NULL_CHARACTER) ? "NULL_CHARACTER" : input_ << "\'" << endl;
-                    cout << "To: " << (node_ == NULL) ? "NULL_NODE" : node_->getNodeName() << endl;*/
+                    cout << "Link by character: \'";
+                    if (input_ == NULL_CHARACTER) {
+                        cout << "NULL_CHARACTER";
+                    } else {
+                        cout << input_;
+                    } 
+                    cout << "\'" << endl;
+                    cout << "To: ";
+                    if (node_ == NULL) {
+                        cout << "NULL_NODE";
+                    } else {
+                        cout << node_->getNodeName();
+                    }
+                    cout << endl;
                 }
         };
 

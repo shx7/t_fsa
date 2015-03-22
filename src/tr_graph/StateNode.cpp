@@ -31,11 +31,12 @@ string StateNode::getNodeName() {
 }
 
 void StateNode::print() {
-    /*vector<Transition>::iterator itr;
+    vector<Transition>::iterator itr;
     cout << "StateNode: " << endl;
     state_.print();
+    cout << "Transitions:" << endl;
     for(itr = transition_list_.begin(); itr != transition_list_.end(); itr++) {
         (*itr).print();
-    } */
+    }
 }
 

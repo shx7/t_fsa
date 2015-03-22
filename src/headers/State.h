@@ -39,8 +39,7 @@ struct State {
         }
 
         void print() {
-            cout << "State: \"" << name_ << "\", id: " << id_ << endl;
-            cout << "state type: ";
+            cout << "State: \"" << name_ << "\" state type: ";
             printStateType();
             cout << endl;
         } 
