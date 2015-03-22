@@ -11,8 +11,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "TransitionMatrix.h"
-#include "TransitionMatrixTypes.h"
+#include "TransitionGraph.h"
 
 struct EngineReport {
     State finish_state;
@@ -23,9 +22,7 @@ struct EngineReport {
 
 class Engine {
     private:
-        TransitionRow*          start_state_row_;
-        TransitionRow*          current_state_row_;
-        InputSequence::iterator current_input_;
+   /*     InputSequence::iterator current_input_;
         InputSequence           input_;
 
     public:
@@ -44,6 +41,6 @@ class Engine {
 
         char getNextInput();
 
-        EngineReport* formReport();
+        EngineReport* formReport();*/
 };
 #endif

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-//#include "Lexer.h"
-#include "TransitionMatrixTypes.h"
+#include "State.h"
 #define DEBUG
 
 using namespace std;

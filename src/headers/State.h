@@ -1,18 +1,19 @@
 /**********************************************************
 *
-*   PURPOSE: Declare inner data types for 
-*   TransitionMatrix
+*   PURPOSE: State describe concrete state without links
+*            to other
 *
 **********************************************************/
-#ifndef TRANSITION_MATRIX_TYPES_H
-#define TRANSITION_MATRIX_TYPES_H
+#ifndef STATE_H
+#define STATE_H
+
 #include <vector>
 #include <string>
 #include <iostream>
 
-#define NULL_CHARACTER 0
-
 using namespace std;
+
+#define NULL_CHARACTER 0 
 
 typedef unsigned long StateID;
 
@@ -30,19 +31,19 @@ struct State {
 
         State(string name = "", StateType type = STATE_ORDINARY, StateID id = -1) : name_(name), type_(type), id_(id) {};
 
-        void print() {
-            cout << "State: \"" << name_ << "\", id: " << id_ << endl;
-            cout << "state type: ";
-            printStateType();
-            cout << endl;
-        }
-
         bool operator==(State& state) {
             if (name_ == state.name_) {
                 return true;
             }
             return false;
         }
+
+        void print() {
+            cout << "State: \"" << name_ << "\", id: " << id_ << endl;
+            cout << "state type: ";
+            printStateType();
+            cout << endl;
+        } 
 
     private:
         void printStateType() {
@@ -61,8 +62,5 @@ struct State {
             }
         }
 };
-
-typedef vector<char>       InputSequence;
-typedef vector<State>      StateSequence; 
 
 #endif
