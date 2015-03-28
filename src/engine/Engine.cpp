@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-EngineReport* Engine::run(TransitionGraph& graph, InputSequence& input) {
+EngineReport Engine::run(TransitionGraph& graph, InputSequence& input) {
     cout << "ENGINE:: run()" << endl;
     initRun(graph, input);
     while (current_character_ != NULL_CHARACTER) {
@@ -33,14 +33,15 @@ void Engine::printCurrentState() {
     }
 }
 
-EngineReport* Engine::formReport() {
-    EngineReport *report = new EngineReport();
-    report->finish_state = current_state_; 
+EngineReport Engine::formReport() {
+    EngineReport report;
+    report.finish_state = current_state_; 
     if (current_state_->type_ == STATE_FINAL) {
-        report->is_sequence_recognized = true;
+        report.is_sequence_recognized = true;
     } else {
-        report->is_sequence_recognized = false;
+        report.is_sequence_recognized = false;
     }
+    return report;
 }
 
 char Engine::getNextCharacter() {

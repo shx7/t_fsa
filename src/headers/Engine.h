@@ -40,14 +40,14 @@ class Engine {
         char                    current_character_;
 
     public:
-        EngineReport* run(TransitionGraph& graph, InputSequence& input);
+        EngineReport run(TransitionGraph& graph, InputSequence& input);
 
     private:
         void step();
 
         void initRun(TransitionGraph& graph, InputSequence& input);
 
-        EngineReport* formReport();
+        EngineReport formReport();
 
         char getNextCharacter();
 
