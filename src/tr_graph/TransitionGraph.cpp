@@ -25,20 +25,26 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
 {
     switch(predicat) {
         case P_CHARACTER:
-            for (char i = 'A'; i <= 'Z'; i++) {
+            for (unsigned char i = 'A'; i <= 'Z'; i++) {
                 addTransition(start_state, i, end_state);
             }
 
-            for (char i = 'a'; i <= 'z'; i++) {
+            for (unsigned char i = 'a'; i <= 'z'; i++) {
                 addTransition(start_state, i, end_state);
             }
             break;
 
         case P_DIGIT:
-            for (char i = '0'; i <= '9'; i++) {
+            for (unsigned char i = '0'; i <= '9'; i++) {
                 addTransition(start_state, i, end_state);
             }
             break;
+
+        case P_ANY:
+            for (unsigned char i = 0; i <= 254; i++) {
+                addTransition(start_state, i, end_state);
+            }
+            break; 
 
         default:
             cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;
@@ -109,7 +115,5 @@ State* TransitionGraph::getStartState() {
 
 void TransitionGraph::initIllegalState() {
     illegal_state_ = new State("STATE_ILLEGAL", STATE_ORDINARY);
-    for (unsigned char i = 0; i <= 254; i++) {
-        addTransition(*illegal_state_, i, *illegal_state_);
-    }
+    addTransitionByPredicat(*illegal_state_, *illegal_state_, P_ANY);
 }

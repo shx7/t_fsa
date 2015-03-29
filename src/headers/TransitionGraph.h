@@ -16,6 +16,7 @@ using namespace std;
 enum Predicat {
     P_CHARACTER,
     P_DIGIT,
+    P_ANY
 };
 
 class TransitionGraph {

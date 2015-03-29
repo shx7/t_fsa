@@ -7,9 +7,10 @@ using namespace std;
 
 void test_1();
 void test_2();
+void test_3();
 
 int main(int argc, char** argv) {
-    test_2();
+    test_3();
     return 0;
 }
 
@@ -52,6 +53,21 @@ void test_2() {
     input.push_back('a');
     input.push_back('S');
     input.push_back('9');
+    input.push_back(0);
+    EngineReport report = engine.run(graph, input);
+    report.print();
+}
+
+void test_3() {
+    TransitionGraph graph;
+    State state1("first_state", STATE_START);
+    State state2("second", STATE_FINAL);
+    graph.addTransitionByPredicat(state1, state2, P_CHARACTER);
+    graph.addTransitionByPredicat(state2, state2, P_ANY);
+    Engine engine;
+    InputSequence input;
+    input.push_back('a');
+    input.push_back('S');
     input.push_back(0);
     EngineReport report = engine.run(graph, input);
     report.print();
