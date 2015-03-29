@@ -30,7 +30,7 @@ class TransitionGraph {
                Predicat predicat); 
 
         void addTransition(State& start_state,
-               char input,
+               unsigned char input,
                State& end_state); 
 
         // Returns new allocated State. Memory should be freed

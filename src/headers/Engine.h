@@ -16,7 +16,7 @@
 #include <iostream>
 
 using namespace std;
-typedef vector<char> InputSequence;
+typedef vector<unsigned char> InputSequence;
 
 struct EngineReport {
     State *finish_state;
@@ -37,7 +37,7 @@ class Engine {
         State                   *current_state_;
         InputSequence::iterator current_input_;
         InputSequence           input_;
-        char                    current_character_;
+        unsigned char           current_character_;
 
     public:
         EngineReport run(TransitionGraph& graph, InputSequence& input);
@@ -49,7 +49,7 @@ class Engine {
 
         EngineReport formReport();
 
-        char getNextCharacter();
+        unsigned char getNextCharacter();
 
         void printCurrentState(); 
 };

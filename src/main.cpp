@@ -50,13 +50,9 @@ void test_2() {
     Engine engine;
     InputSequence input;
     input.push_back('a');
-    input.push_back('a');
-    input.push_back('1');
-    input.push_back('a');
-    input.push_back('b');
-    input.push_back('a');
-    input.push_back('d');
-    input.push_back('f');
+    input.push_back('S');
+    input.push_back('9');
+    input.push_back(0);
     EngineReport report = engine.run(graph, input);
     report.print();
 }

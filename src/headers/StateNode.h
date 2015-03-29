@@ -18,8 +18,8 @@ class StateNode {
     private:
         class Transition {
             public:
-                char       input_;
-                StateNode* node_;
+                unsigned char  input_;
+                StateNode*     node_;
 
                 Transition() : node_(NULL), input_(NULL_CHARACTER) {}
 
@@ -40,16 +40,6 @@ class StateNode {
                     cout << endl;
                 }
         };
-
-        /*bool isInputExists(char input) {
-            vector<Transition>::iterator itr;
-            for (itr = transition_list_.begin(); itr != transition_list_.end(); itr++) {
-                if (*itr == input) {
-                    return true;
-                }
-            }
-            return false; 
-        }*/
 
     public:
         StateNode() {} 

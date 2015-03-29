@@ -46,7 +46,7 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
 }
 
 void TransitionGraph::addTransition(State& start_state,
-       char input,
+       unsigned char input,
        State& end_state)
 {
     StateNode *start_node, *end_node;
@@ -109,7 +109,7 @@ State* TransitionGraph::getStartState() {
 
 void TransitionGraph::initIllegalState() {
     illegal_state_ = new State("STATE_ILLEGAL", STATE_ORDINARY);
-    for (char i = 0; i <= 126; i++) {
+    for (unsigned char i = 0; i <= 254; i++) {
         addTransition(*illegal_state_, i, *illegal_state_);
     }
 }

@@ -44,8 +44,8 @@ EngineReport Engine::formReport() {
     return report;
 }
 
-char Engine::getNextCharacter() {
-    char result;
+unsigned char Engine::getNextCharacter() {
+    unsigned char result;
     if (current_input_ == input_.end()) {
         return NULL_CHARACTER;
     }
