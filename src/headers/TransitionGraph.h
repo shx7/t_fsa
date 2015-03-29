@@ -13,18 +13,25 @@
 
 using namespace std;
 
+enum Predicat {
+    P_CHARACTER,
+    P_DIGIT,
+};
+
 class TransitionGraph {
     public:
         TransitionGraph() {
             initIllegalState();
         }
 
+        // Adding transition by predicat{characters, digits}
+        void addTransitionByPredicat(State& start_state,
+               State& end_state,
+               Predicat predicat); 
+
         void addTransition(State& start_state,
                char input,
-               State& end_state);
-
-        void addState(string& name, StateType type); 
-        void addState(State& state);
+               State& end_state); 
 
         // Returns new allocated State. Memory should be freed
         State* getNextState(string& name, char input); 
@@ -36,6 +43,9 @@ class TransitionGraph {
         bool isStateNodeExists(string& name);
         StateNode* findStateNode(string& name);
         void initIllegalState();
+
+        void addState(string& name, StateType type); 
+        void addState(State& state);
 
     private:
         map<string, StateNode> state_node_table_;

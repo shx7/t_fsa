@@ -18,6 +18,33 @@ StateNode* TransitionGraph::findStateNode(string& name) {
     return &(itr->second);
 }
 
+
+void TransitionGraph::addTransitionByPredicat(State& start_state,
+       State& end_state,
+       Predicat predicat)
+{
+    switch(predicat) {
+        case P_CHARACTER:
+            for (char i = 'A'; i <= 'Z'; i++) {
+                addTransition(start_state, i, end_state);
+            }
+
+            for (char i = 'a'; i <= 'z'; i++) {
+                addTransition(start_state, i, end_state);
+            }
+            break;
+
+        case P_DIGIT:
+            for (char i = '0'; i <= '9'; i++) {
+                addTransition(start_state, i, end_state);
+            }
+            break;
+
+        default:
+            cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;
+    }
+}
+
 void TransitionGraph::addTransition(State& start_state,
        char input,
        State& end_state)
@@ -82,4 +109,7 @@ State* TransitionGraph::getStartState() {
 
 void TransitionGraph::initIllegalState() {
     illegal_state_ = new State("STATE_ILLEGAL", STATE_ORDINARY);
+    for (char i = 0; i <= 126; i++) {
+        addTransition(*illegal_state_, i, *illegal_state_);
+    }
 }
