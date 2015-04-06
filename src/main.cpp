@@ -66,8 +66,10 @@ void test_3() {
     graph.addTransitionByPredicat(state2, state2, P_ANY);
     Engine engine;
     InputSequence input;
+    input.push_back('2');
     input.push_back('a');
     input.push_back('S');
+    input.push_back('}');
     input.push_back(0);
     EngineReport report = engine.run(graph, input);
     report.print();

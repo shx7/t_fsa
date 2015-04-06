@@ -16,7 +16,8 @@ using namespace std;
 enum Predicat {
     P_CHARACTER,
     P_DIGIT,
-    P_ANY
+    P_ANY,
+    P_WHITE
 };
 
 class TransitionGraph {
@@ -25,7 +26,7 @@ class TransitionGraph {
             initIllegalState();
         }
 
-        // Adding transition by predicat{characters, digits}
+        // Adding transition by predicat{characters, digits, any_key}
         void addTransitionByPredicat(State& start_state,
                State& end_state,
                Predicat predicat); 

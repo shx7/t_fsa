@@ -1,7 +1,7 @@
-#include "../headers/Lexer.h"
+#include "Lexer.h"
 
 Token& Lexer::getNextToken() {
-    string tmp;
+    /*string tmp;
     skipSubstractedChars();
 
     token_.type_ = L_ILLEGAL;
@@ -73,5 +73,5 @@ Token& Lexer::getNextToken() {
         }
     }
 
-    return token_;
+    return token_;*/
 }

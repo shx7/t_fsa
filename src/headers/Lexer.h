@@ -12,6 +12,7 @@
 #include <fstream>
 #include <map>
 #include <iostream>
+#include "TransitionGraph.h"
 
 using namespace std;
 
@@ -30,23 +31,21 @@ enum LexemType {
     L_NOT_RECOGNIZED,
 };
 
-struct Lexem {
-    LexemType type_;
-};
-
 struct Token {
     LexemType type_;
-    string data_;
+    void      *data_;
 };
 
 typedef std::map<std::string, LexemType> ReservedWords;
 
 class Lexer {
     private:
-        istream& input_;
-        char current_char_;
-        Token token_;
-        ReservedWords reserved_words_;
+        istream&        input_;
+        ReservedWords   reserved_words_;
+        Token           token_;
+        unsigned char   current_char_;
+        TransitionGraph transitionGraph;
+        string          tmp_char_buffer;
 
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {
@@ -67,27 +66,19 @@ class Lexer {
             }
         }
 
-        char getNextChar() {
-            return input_.get();
-        }
-
-        bool isBody(char chr) {
+        unsigned char getNextChar() {
+            unsigned char chr = input_.get();
             std::locale loc;
             chr = std::tolower(chr, loc);
-            if ((chr >= 'a') && (chr <= 'z')) {
-                return true;
-            }
-            return false;
+            return chr;
         }
 
-        bool isDigit(char chr) {
-            return ((chr >= '0') && (chr <= '9'));
-        }
+        void createTransitionGraph() {
+            // Form an finite state machine
+            State init_state("init_state", STATE_START); 
+            // L_AUTOMATON LEXEM
+            State automaton_a("automaton_a", STATE_ORDINARY);
 
-        bool isReservedWord(string& str) {
-            ReservedWords::iterator itr;
-            itr = reserved_words_.find(str);
-            return (itr == reserved_words_.end());
         }
 
         void initReservedWords() {

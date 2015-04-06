@@ -46,6 +46,11 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
             }
             break; 
 
+        case P_WHITE:
+            addTransition(start_state, ' ', end_state);
+            addTransition(start_state, '\n', end_state);
+            addTransition(start_state, '\t', end_state);
+
         default:
             cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;
     }
