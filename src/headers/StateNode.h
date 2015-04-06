@@ -20,11 +20,18 @@ class StateNode {
     private:
         class Transition {
             public:
-                unsigned char  input_;
-                StateNode*     node_;
-                void           (*semanticFunction_)(char);
+                unsigned char input_;
+                StateNode*    node_;
+                void          (*semanticFunction_)(unsigned char);
 
                 Transition() : node_(NULL), input_(NULL_CHARACTER), semanticFunction_(NULL) {}
+
+                void callSemantic(unsigned char input) {
+                    cout << "Transition::callSemantic(\'" << input << "\')" << endl;
+                    if (semanticFunction_ != NULL) {
+                        semanticFunction_(input);
+                    } 
+                }
 
                 void print() {
                     cout << "Link by character: \'";
@@ -55,7 +62,9 @@ class StateNode {
 
         void addTransition(char input, StateNode* node);
 
-        void addTransition(char input, StateNode* node, void (*semanticFunction)(char));
+        void addTransition(char input,
+                StateNode* node,
+                void (*semanticFunction)(unsigned char));
 
         StateNode* getNextNode(char input);
 

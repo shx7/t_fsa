@@ -23,33 +23,41 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
        Predicat predicat,
        State& end_state)
 {
+    addTransitionByPredicat(start_state, predicat, end_state, NULL);
+}
+
+void TransitionGraph::addTransitionByPredicat(State& start_state,
+       Predicat predicat,
+       State& end_state,
+       void (*semantic_func)(unsigned char))
+{
     switch(predicat) {
         case P_CHARACTER:
             for (unsigned char i = 'A'; i <= 'Z'; i++) {
-                addTransition(start_state, i, end_state);
+                addTransition(start_state, i, end_state, semantic_func);
             }
 
             for (unsigned char i = 'a'; i <= 'z'; i++) {
-                addTransition(start_state, i, end_state);
+                addTransition(start_state, i, end_state, semantic_func);
             }
             break;
 
         case P_DIGIT:
             for (unsigned char i = '0'; i <= '9'; i++) {
-                addTransition(start_state, i, end_state);
+                addTransition(start_state, i, end_state, semantic_func);
             }
             break;
 
         case P_ANY:
             for (unsigned char i = 0; i <= 254; i++) {
-                addTransition(start_state, i, end_state);
+                addTransition(start_state, i, end_state, semantic_func);
             }
             break; 
 
         case P_WHITE:
-            addTransition(start_state, ' ', end_state);
-            addTransition(start_state, '\n', end_state);
-            addTransition(start_state, '\t', end_state);
+            addTransition(start_state, ' ', end_state, semantic_func);
+            addTransition(start_state, '\n', end_state, semantic_func);
+            addTransition(start_state, '\t', end_state, semantic_func);
 
         default:
             cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;
@@ -60,13 +68,26 @@ void TransitionGraph::addTransition(State& start_state,
        unsigned char input,
        State& end_state)
 {
+    addTransition(start_state, input, end_state, NULL);
+}
+
+void TransitionGraph::addTransition(State& start_state,
+       unsigned char input,
+       State& end_state,
+       void (*semantic_func)(unsigned char))
+{
+    if (semantic_func != NULL) {
+        cout << "TransitionGraph::addTransition(...) not NULL semantic func for \'" << input << "\' character" << endl;
+    }
     StateNode *start_node, *end_node;
     addState(start_state);
     addState(end_state);
     start_node = findStateNode(start_state.name_);
     end_node = findStateNode(end_state.name_);
-    start_node->addTransition(input, end_node);
+    start_node->addTransition(input, end_node, semantic_func); 
 }
+
+
 
 void TransitionGraph::addState(string& name, StateType type) {
     if (isStateNodeExists(name)) {

@@ -31,9 +31,19 @@ class TransitionGraph {
                Predicat predicat,
                State& end_state);
 
+        void addTransitionByPredicat(State& start_state,
+               Predicat predicat,
+               State& end_state,
+               void (*semantic_func)(unsigned char)); 
+
         void addTransition(State& start_state,
                unsigned char input,
                State& end_state); 
+
+        void addTransition(State& start_state,
+               unsigned char input,
+               State& end_state,
+               void (*semantic_func)(unsigned char)); 
 
         // Returns new allocated State. Memory should be freed
         State* getNextState(string& name, char input); 

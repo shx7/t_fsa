@@ -10,6 +10,10 @@ void test_1(void);
 void test_2();
 void test_3();
 
+void print_1(unsigned char input) {
+    cout << "PRINT!" << endl;
+}
+
 int main(int argc, char** argv) {
     test_3();
     //void (*entry)(void);
@@ -64,7 +68,7 @@ void test_3() {
     TransitionGraph graph;
     State state1("first_state", STATE_START);
     State state2("second", STATE_FINAL);
-    graph.addTransitionByPredicat(state1, P_CHARACTER, state2);
+    graph.addTransitionByPredicat(state1, P_CHARACTER, state2, print_1);
     graph.addTransitionByPredicat(state2, P_ANY, state2);
     Engine engine;
     InputSequence input;
