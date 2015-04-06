@@ -9,6 +9,9 @@
 #ifndef LEXER_H
 #define LEXER_H
 
+#define DEFINE_STATE(name, type) \
+    State name (#name, type);
+
 #include <fstream>
 #include <map>
 #include <iostream>
@@ -75,9 +78,33 @@ class Lexer {
 
         void createTransitionGraph() {
             // Form an finite state machine
-            State init_state("init_state", STATE_START); 
-            // L_AUTOMATON LEXEM
-            State automaton_a("automaton_a", STATE_ORDINARY);
+            State start_st("start_st", STATE_START); 
+
+            // Any word. Will be preprocessed later
+            State word_st("word_st", STATE_ORDINARY);
+            transitionGraph.addTransitionByPredicat(start_st, P_CHARACTER, word_st);
+            transitionGraph.addTransitionByPredicat(word_st, P_CHARACTER, word_st);
+            transitionGraph.addTransitionByPredicat(word_st, P_DIGIT, word_st);
+            transitionGraph.addTransitionByPredicat(word_st, P_WHITE, start_st);
+
+            // L_OPEN_PARENTETHIS lexem
+            State opt_st("opt_st", STATE_ORDINARY);
+            transitionGraph.addTransition(start_st, '}', opt_st);
+            transitionGraph.addTransitionByPredicat(opt_st, P_WHITE, start_st);
+
+            // L_CLOSING_PARENTHESIS lexem
+            State cpt_st("cpt_st", STATE_ORDINARY);
+            transitionGraph.addTransition(start_st, '{', cpt_st);
+            transitionGraph.addTransitionByPredicat(cpt_st, P_WHITE, start_st);
+
+            // L_TRANSITION lexem
+            State trans_st1("trans_st1", STATE_ORDINARY);
+            State trans_st2("trans_st2", STATE_ORDINARY);
+            transitionGraph.addTransition(start_st, '=', trans_st1);
+            transitionGraph.addTransition(trans_st1, '>', trans_st2);
+            transitionGraph.addTransitionByPredicat(trans_st2, P_WHITE, start_st);
+
+            // L_SEMICOLON lexem
 
         }
 

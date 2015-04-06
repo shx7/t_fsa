@@ -20,8 +20,8 @@ StateNode* TransitionGraph::findStateNode(string& name) {
 
 
 void TransitionGraph::addTransitionByPredicat(State& start_state,
-       State& end_state,
-       Predicat predicat)
+       Predicat predicat,
+       State& end_state)
 {
     switch(predicat) {
         case P_CHARACTER:
@@ -120,5 +120,5 @@ State* TransitionGraph::getStartState() {
 
 void TransitionGraph::initIllegalState() {
     illegal_state_ = new State("STATE_ILLEGAL", STATE_ORDINARY);
-    addTransitionByPredicat(*illegal_state_, *illegal_state_, P_ANY);
+    addTransitionByPredicat(*illegal_state_, P_ANY, *illegal_state_);
 }

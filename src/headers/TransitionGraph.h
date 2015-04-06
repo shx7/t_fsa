@@ -28,8 +28,8 @@ class TransitionGraph {
 
         // Adding transition by predicat{characters, digits, any_key}
         void addTransitionByPredicat(State& start_state,
-               State& end_state,
-               Predicat predicat); 
+               Predicat predicat,
+               State& end_state);
 
         void addTransition(State& start_state,
                unsigned char input,

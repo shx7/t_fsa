@@ -45,9 +45,9 @@ void test_2() {
     State state2("second state", STATE_ORDINARY);
     State state3("third statte", STATE_ORDINARY);
     State state4("fourth statte", STATE_FINAL);
-    graph.addTransitionByPredicat(state1, state2, P_CHARACTER);
-    graph.addTransitionByPredicat(state2, state3, P_CHARACTER);
-    graph.addTransitionByPredicat(state3, state4, P_DIGIT);
+    graph.addTransitionByPredicat(state1, P_CHARACTER, state2);
+    graph.addTransitionByPredicat(state2, P_CHARACTER, state3);
+    graph.addTransitionByPredicat(state3, P_DIGIT, state4);
     Engine engine;
     InputSequence input;
     input.push_back('a');
@@ -62,8 +62,8 @@ void test_3() {
     TransitionGraph graph;
     State state1("first_state", STATE_START);
     State state2("second", STATE_FINAL);
-    graph.addTransitionByPredicat(state1, state2, P_CHARACTER);
-    graph.addTransitionByPredicat(state2, state2, P_ANY);
+    graph.addTransitionByPredicat(state1, P_CHARACTER, state2);
+    graph.addTransitionByPredicat(state2, P_ANY, state2);
     Engine engine;
     InputSequence input;
     input.push_back('2');
