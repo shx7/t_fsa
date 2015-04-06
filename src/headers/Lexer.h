@@ -64,6 +64,9 @@ class Lexer {
 
         Token& getNextToken();
 
+        void runParse() {
+        }
+
     private: 
         void skipSubstractedChars() {
             cout << "SkippingSubstracted" << endl;

@@ -14,14 +14,17 @@
 
 using namespace std; 
 
+typedef void TransitionEntry(void);
+
 class StateNode {
     private:
         class Transition {
             public:
                 unsigned char  input_;
                 StateNode*     node_;
+                void           (*semanticFunction_)(char);
 
-                Transition() : node_(NULL), input_(NULL_CHARACTER) {}
+                Transition() : node_(NULL), input_(NULL_CHARACTER), semanticFunction_(NULL) {}
 
                 void print() {
                     cout << "Link by character: \'";
@@ -51,6 +54,8 @@ class StateNode {
         void setState(State& state);
 
         void addTransition(char input, StateNode* node);
+
+        void addTransition(char input, StateNode* node, void (*semanticFunction)(char));
 
         StateNode* getNextNode(char input);
 

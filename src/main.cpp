@@ -2,15 +2,17 @@
 #include <iostream>
 #include "TransitionGraph.h"
 #include "Engine.h"
+#include <vector>
 
 using namespace std;
 
-void test_1();
+void test_1(void);
 void test_2();
 void test_3();
 
 int main(int argc, char** argv) {
     test_3();
+    //void (*entry)(void);
     return 0;
 }
 

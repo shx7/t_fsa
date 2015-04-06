@@ -6,10 +6,15 @@ void StateNode::setState(State& state) {
 }
 
 void StateNode::addTransition(char input, StateNode* node) {
+    addTransition(input, node, NULL);
+}
+
+void StateNode::addTransition(char input, StateNode* node, void (*semanticFunction)(char)) {
     Transition transition;
     transition.input_ = input;
     transition.node_ = node;
-    transition_list_.push_back(transition);
+    transition.semanticFunction_ = semanticFunction;
+    transition_list_.push_back(transition); 
 }
 
 StateNode* StateNode::getNextNode(char input) {
