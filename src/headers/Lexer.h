@@ -9,13 +9,19 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#define DEFINE_STATE(name, type) \
-    State name (#name, type);
-
 #include <fstream>
 #include <map>
 #include <iostream>
 #include "TransitionGraph.h"
+
+#define DEFINE_STATE(name, type) \
+    State name (#name, type);
+
+#define ADD_TRANSITION(st1, chr, st2) \
+    transitionGraph.addTransition(st1, chr, st2);
+
+#define ADD_TRANSITION_P(st1, predicat, st2) \
+    transitionGraph.addTransitionByPredicat(st1, predicat, st2); 
 
 using namespace std;
 
@@ -78,34 +84,35 @@ class Lexer {
 
         void createTransitionGraph() {
             // Form an finite state machine
-            State start_st("start_st", STATE_START); 
+            DEFINE_STATE(start_st, STATE_START);
 
             // Any word. Will be preprocessed later
-            State word_st("word_st", STATE_ORDINARY);
-            transitionGraph.addTransitionByPredicat(start_st, P_CHARACTER, word_st);
-            transitionGraph.addTransitionByPredicat(word_st, P_CHARACTER, word_st);
-            transitionGraph.addTransitionByPredicat(word_st, P_DIGIT, word_st);
-            transitionGraph.addTransitionByPredicat(word_st, P_WHITE, start_st);
+            DEFINE_STATE(word_st, STATE_ORDINARY);
+            ADD_TRANSITION_P(start_st, P_CHARACTER, word_st);
+            ADD_TRANSITION_P(word_st, P_CHARACTER, word_st);
+            ADD_TRANSITION_P(word_st, P_DIGIT, word_st);
+            ADD_TRANSITION_P(word_st, P_WHITE, start_st);
 
             // L_OPEN_PARENTETHIS lexem
-            State opt_st("opt_st", STATE_ORDINARY);
-            transitionGraph.addTransition(start_st, '}', opt_st);
-            transitionGraph.addTransitionByPredicat(opt_st, P_WHITE, start_st);
+            DEFINE_STATE(opt_st, STATE_ORDINARY);
+            ADD_TRANSITION(start_st, '{', opt_st);
+            ADD_TRANSITION_P(opt_st, P_WHITE, start_st);
 
             // L_CLOSING_PARENTHESIS lexem
-            State cpt_st("cpt_st", STATE_ORDINARY);
-            transitionGraph.addTransition(start_st, '{', cpt_st);
-            transitionGraph.addTransitionByPredicat(cpt_st, P_WHITE, start_st);
+            DEFINE_STATE(cpt_st, STATE_ORDINARY);
+            ADD_TRANSITION(start_st, '}', cpt_st);
+            ADD_TRANSITION_P(cpt_st, P_WHITE, start_st);
 
             // L_TRANSITION lexem
-            State trans_st1("trans_st1", STATE_ORDINARY);
-            State trans_st2("trans_st2", STATE_ORDINARY);
-            transitionGraph.addTransition(start_st, '=', trans_st1);
-            transitionGraph.addTransition(trans_st1, '>', trans_st2);
-            transitionGraph.addTransitionByPredicat(trans_st2, P_WHITE, start_st);
-
+            DEFINE_STATE(trans_st1, STATE_ORDINARY);
+            DEFINE_STATE(trans_st2, STATE_ORDINARY);
+            ADD_TRANSITION(start_st, '=', trans_st1);
+            ADD_TRANSITION(trans_st1, '=', trans_st2);
+            ADD_TRANSITION_P(trans_st2, P_WHITE, start_st);
+            
             // L_SEMICOLON lexem
-
+            DEFINE_STATE(semicolon_st, STATE_ORDINARY);
+            ADD_TRANSITION(start_st, ';', semicolon_st); 
         }
 
         void initReservedWords() {
