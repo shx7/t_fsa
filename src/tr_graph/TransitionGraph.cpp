@@ -76,9 +76,11 @@ void TransitionGraph::addTransition(State& start_state,
        State& end_state,
        void (*semantic_func)(unsigned char))
 {
+#ifdef TRANSITION_GRAPH_DEBUG
     if (semantic_func != NULL) {
         cout << "TransitionGraph::addTransition(...) not NULL semantic func for \'" << input << "\' character" << endl;
     }
+#endif
     StateNode *start_node, *end_node;
     addState(start_state);
     addState(end_state);

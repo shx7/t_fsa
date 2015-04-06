@@ -11,7 +11,7 @@ void test_2();
 void test_3();
 
 void print_1(unsigned char input) {
-    cout << "PRINT!" << endl;
+    cout << "PRINT! \'" << input << "\'" <<  endl;
 }
 
 int main(int argc, char** argv) {
@@ -70,9 +70,9 @@ void test_3() {
     State state2("second", STATE_FINAL);
     graph.addTransitionByPredicat(state1, P_CHARACTER, state2, print_1);
     graph.addTransitionByPredicat(state2, P_ANY, state2);
+    //graph.print();
     Engine engine;
     InputSequence input;
-    input.push_back('2');
     input.push_back('a');
     input.push_back('S');
     input.push_back('}');

@@ -12,9 +12,11 @@ void StateNode::addTransition(char input, StateNode* node) {
 void StateNode::addTransition(char input,
         StateNode* node,
         void (*semanticFunction)(unsigned char)) {
+#ifdef STATE_NODE_DEBUG
     if (semanticFunction != NULL) {
         cout << "StateNode::addTransition(...) not null semantic" << endl;
     }
+#endif
     Transition transition;
     transition.input_ = input;
     transition.node_ = node;
@@ -24,7 +26,7 @@ void StateNode::addTransition(char input,
 
 StateNode* StateNode::getNextNode(char input) {
     vector<Transition>::iterator itr;
-    for(itr = transition_list_.begin(); itr != transition_list_.end(); itr++) {
+    for (itr = transition_list_.begin(); itr != transition_list_.end(); itr++) {
         if ((*itr).input_ == input) {
             (*itr).callSemantic(input);
             return (*itr).node_;
@@ -46,7 +48,7 @@ void StateNode::print() {
     cout << "StateNode: " << endl;
     state_.print();
     cout << "Transitions:" << endl;
-    for(itr = transition_list_.begin(); itr != transition_list_.end(); itr++) {
+    for (itr = transition_list_.begin(); itr != transition_list_.end(); itr++) {
         (*itr).print();
     }
 }

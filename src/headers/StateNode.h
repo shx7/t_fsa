@@ -27,7 +27,9 @@ class StateNode {
                 Transition() : node_(NULL), input_(NULL_CHARACTER), semanticFunction_(NULL) {}
 
                 void callSemantic(unsigned char input) {
+                #ifdef TRANSITION_DEBUG
                     cout << "Transition::callSemantic(\'" << input << "\')" << endl;
+                #endif
                     if (semanticFunction_ != NULL) {
                         semanticFunction_(input);
                     } 
@@ -47,6 +49,7 @@ class StateNode {
                     } else {
                         cout << node_->getNodeName();
                     }
+                    cout << " semantic addr: " << semanticFunction_ << endl;
                     cout << endl;
                 }
         };
