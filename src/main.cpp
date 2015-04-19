@@ -17,7 +17,7 @@ void print_1(unsigned char input) {
 }
 
 int main(int argc, char** argv) {
-    test_4();
+    test_3();
     return 0;
 }
 
@@ -66,10 +66,11 @@ void test_2() {
 }
 
 void test_3() {
-    /*TransitionGraph graph;
+    TransitionGraph graph;
+    LexerSemanticCommand cmd;
     State state1("first_state", STATE_START);
     State state2("second", STATE_FINAL);
-    graph.addTransitionByPredicat(state1, P_CHARACTER, state2, print_1);
+    graph.addTransitionByPredicat(state1, P_CHARACTER, state2, cmd);
     graph.addTransitionByPredicat(state2, P_ANY, state2);
     //graph.print();
     Engine engine;
@@ -79,7 +80,7 @@ void test_3() {
     input.push_back('}');
     input.push_back(0);
     EngineReport report = engine.run(graph, input);
-    report.print();*/
+    report.print();
 }
 
 void test_4() {

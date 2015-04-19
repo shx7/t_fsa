@@ -31,37 +31,37 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
        State& end_state,
        SemanticCommand& cmd)
 {
-    /*switch(predicat) {
+    switch(predicat) {
         case P_CHARACTER:
             for (unsigned char i = 'A'; i <= 'Z'; i++) {
                 addTransition(start_state, i, end_state, cmd);
             }
 
             for (unsigned char i = 'a'; i <= 'z'; i++) {
-                addTransition(start_state, i, end_state, semantic_func);
+                addTransition(start_state, i, end_state, cmd);
             }
             break;
 
         case P_DIGIT:
             for (unsigned char i = '0'; i <= '9'; i++) {
-                addTransition(start_state, i, end_state, semantic_func);
+                addTransition(start_state, i, end_state, cmd);
             }
             break;
 
         case P_ANY:
             for (unsigned char i = 0; i <= 254; i++) {
-                addTransition(start_state, i, end_state, semantic_func);
+                addTransition(start_state, i, end_state, cmd);
             }
             break; 
 
         case P_WHITE:
-            addTransition(start_state, ' ', end_state, semantic_func);
-            addTransition(start_state, '\n', end_state, semantic_func);
-            addTransition(start_state, '\t', end_state, semantic_func);
+            addTransition(start_state, ' ', end_state, cmd);
+            addTransition(start_state, '\n', end_state, cmd);
+            addTransition(start_state, '\t', end_state, cmd);
 
         default:
             cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;
-    }*/
+    }
 }
 
 void TransitionGraph::addTransition(State& start_state,
@@ -76,11 +76,6 @@ void TransitionGraph::addTransition(State& start_state,
        State& end_state,
        SemanticCommand& cmd)
 {
-#ifdef TRANSITION_GRAPH_DEBUG
-    if (semantic_func != NULL) {
-        cout << "TransitionGraph::addTransition(...) not NULL semantic func for \'" << input << "\' character" << endl;
-    }
-#endif
     StateNode *start_node, *end_node;
     addState(start_state);
     addState(end_state);
