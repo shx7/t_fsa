@@ -9,6 +9,8 @@
 #define STATE_NODE_H
 
 #include "State.h"
+#include "SemanticCommand.h"
+#include "NullSemanticCommand.h"
 #include <vector>
 #include <iostream>
 
@@ -20,18 +22,22 @@ class StateNode {
     private:
         class Transition {
             public:
-                unsigned char input_;
-                StateNode*    node_;
-                void          (*semanticFunction_)(unsigned char);
+                unsigned char   input_;
+                StateNode       *node_; // End point of transition
+                SemanticCommand *cmd_;
 
-                Transition() : node_(NULL), input_(NULL_CHARACTER), semanticFunction_(NULL) {}
+                Transition() : node_(NULL), input_(NULL_CHARACTER), cmd_(NULL) {}
+
+                Transition(StateNode* node,
+                        unsigned char input,
+                        SemanticCommand& cmd) : node_(node), input_(input), cmd_(&cmd) {}
 
                 void callSemantic(unsigned char input) {
                 #ifdef TRANSITION_DEBUG
                     cout << "Transition::callSemantic(\'" << input << "\')" << endl;
                 #endif
-                    if (semanticFunction_ != NULL) {
-                        semanticFunction_(input);
+                    if (cmd_ != NULL) {
+                        cmd_->command(input);
                     } 
                 }
 
@@ -49,7 +55,7 @@ class StateNode {
                     } else {
                         cout << node_->getNodeName();
                     }
-                    cout << " semantic addr: " << semanticFunction_ << endl;
+                    //cout << " semantic addr: " << semanticFunction_ << endl;
                     cout << endl;
                 }
         };
@@ -67,7 +73,7 @@ class StateNode {
 
         void addTransition(char input,
                 StateNode* node,
-                void (*semanticFunction)(unsigned char));
+                SemanticCommand& cmd);
 
         StateNode* getNextNode(char input);
 
@@ -78,7 +84,8 @@ class StateNode {
         void print();
 
     private: 
-        State              state_;
-        vector<Transition> transition_list_;
+        State               state_;
+        vector<Transition>  transition_list_;
+        NullSemanticCommand null_semantic_cmd_;
 };
 #endif

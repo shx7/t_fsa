@@ -10,6 +10,7 @@
 #include <map>
 #include "State.h"
 #include "StateNode.h"
+#include "NullSemanticCommand.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ class TransitionGraph {
         void addTransitionByPredicat(State& start_state,
                Predicat predicat,
                State& end_state,
-               void (*semantic_func)(unsigned char)); 
+               SemanticCommand& cmd);
 
         void addTransition(State& start_state,
                unsigned char input,
@@ -43,7 +44,7 @@ class TransitionGraph {
         void addTransition(State& start_state,
                unsigned char input,
                State& end_state,
-               void (*semantic_func)(unsigned char)); 
+               SemanticCommand& cmd);
 
         // Returns new allocated State. Memory should be freed
         State* getNextState(string& name, char input); 
@@ -61,8 +62,9 @@ class TransitionGraph {
 
     private:
         map<string, StateNode> state_node_table_;
-        State*                 illegal_state_; // Special illegal state. Used, if input
-                                               // automaton is not full to complete em to full automaton
+        State                  *illegal_state_;      // Special illegal state. Used, if input
+                                                    // automaton is not full to complete em to full automaton
+        NullSemanticCommand    null_semantic_cmd_;
 };
 
 #endif

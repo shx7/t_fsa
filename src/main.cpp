@@ -66,7 +66,7 @@ void test_2() {
 }
 
 void test_3() {
-    TransitionGraph graph;
+    /*TransitionGraph graph;
     State state1("first_state", STATE_START);
     State state2("second", STATE_FINAL);
     graph.addTransitionByPredicat(state1, P_CHARACTER, state2, print_1);
@@ -79,7 +79,7 @@ void test_3() {
     input.push_back('}');
     input.push_back(0);
     EngineReport report = engine.run(graph, input);
-    report.print();
+    report.print();*/
 }
 
 void test_4() {

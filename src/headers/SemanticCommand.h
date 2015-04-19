@@ -9,7 +9,7 @@
 
 class SemanticCommand {
     public:
-        virtual void command() = 0;
+        virtual void command(unsigned char input) = 0;
 };
 
 #endif

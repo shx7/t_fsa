@@ -23,18 +23,18 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
        Predicat predicat,
        State& end_state)
 {
-    addTransitionByPredicat(start_state, predicat, end_state, NULL);
+    addTransitionByPredicat(start_state, predicat, end_state, null_semantic_cmd_);
 }
 
 void TransitionGraph::addTransitionByPredicat(State& start_state,
        Predicat predicat,
        State& end_state,
-       void (*semantic_func)(unsigned char))
+       SemanticCommand& cmd)
 {
-    switch(predicat) {
+    /*switch(predicat) {
         case P_CHARACTER:
             for (unsigned char i = 'A'; i <= 'Z'; i++) {
-                addTransition(start_state, i, end_state, semantic_func);
+                addTransition(start_state, i, end_state, cmd);
             }
 
             for (unsigned char i = 'a'; i <= 'z'; i++) {
@@ -61,20 +61,20 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
 
         default:
             cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;
-    }
+    }*/
 }
 
 void TransitionGraph::addTransition(State& start_state,
        unsigned char input,
        State& end_state)
 {
-    addTransition(start_state, input, end_state, NULL);
+    addTransition(start_state, input, end_state, null_semantic_cmd_);
 }
 
 void TransitionGraph::addTransition(State& start_state,
        unsigned char input,
        State& end_state,
-       void (*semantic_func)(unsigned char))
+       SemanticCommand& cmd)
 {
 #ifdef TRANSITION_GRAPH_DEBUG
     if (semantic_func != NULL) {
@@ -86,7 +86,7 @@ void TransitionGraph::addTransition(State& start_state,
     addState(end_state);
     start_node = findStateNode(start_state.name_);
     end_node = findStateNode(end_state.name_);
-    start_node->addTransition(input, end_node, semantic_func); 
+    start_node->addTransition(input, end_node, cmd); 
 }
 
 

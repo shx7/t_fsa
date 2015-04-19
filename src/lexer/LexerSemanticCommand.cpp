@@ -1,6 +1,6 @@
 #include "LexerSemanticCommand.h"
 
 void 
-LexerSemanticCommand::command() {
-    cout << "Virtual command" << endl;
+LexerSemanticCommand::command(unsigned char input) {
+    cout << "Virtual command. Character: " << input << endl;
 }

@@ -67,7 +67,6 @@ class Lexer {
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {
             cout << "Lexer constructed" << endl;
-            semanticCommand.command();
             initReservedWords();
             createTransitionGraph();
         }

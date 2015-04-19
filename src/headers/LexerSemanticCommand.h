@@ -12,6 +12,6 @@ using namespace std;
 
 class LexerSemanticCommand : public SemanticCommand {
     public:
-        void command();
+        void command(unsigned char input);
 };
 #endif

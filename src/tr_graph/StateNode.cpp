@@ -6,21 +6,17 @@ void StateNode::setState(State& state) {
 }
 
 void StateNode::addTransition(char input, StateNode* node) {
-    addTransition(input, node, NULL);
+    addTransition(input, node, null_semantic_cmd_);
 }
 
 void StateNode::addTransition(char input,
         StateNode* node,
-        void (*semanticFunction)(unsigned char)) {
-#ifdef STATE_NODE_DEBUG
-    if (semanticFunction != NULL) {
-        cout << "StateNode::addTransition(...) not null semantic" << endl;
-    }
-#endif
-    Transition transition;
+        SemanticCommand& cmd) {
+    /*Transition transition;
     transition.input_ = input;
     transition.node_ = node;
-    transition.semanticFunction_ = semanticFunction;
+    transition.cmd_ = &cmd;*/
+    Transition transition(node, input, cmd);
     transition_list_.push_back(transition); 
 }
 
