@@ -13,6 +13,7 @@
 #include <map>
 #include <iostream>
 #include "TransitionGraph.h"
+#include "LexerSemanticCommand.h"
 
 #define DEFINE_STATE(name, type) \
     State name (#name, type);
@@ -22,6 +23,12 @@
 
 #define ADD_TRANSITION_P(st1, predicat, st2) \
     transitionGraph.addTransitionByPredicat(st1, predicat, st2); 
+
+#define ADD_TRANSITION_SEM(st1, chr, st2, sem_fun) \
+    transitionGraph.addTransition(st1, chr, st2, sem_fun);
+
+#define ADD_TRANSITION_SEM_P(st1, predicat, st2, sem_fun) \
+    transitionGraph.addTransitionByPredicat(st1, predicat, st2, sem_fun); 
 
 using namespace std;
 
@@ -49,22 +56,26 @@ typedef std::map<std::string, LexemType> ReservedWords;
 
 class Lexer {
     private:
-        istream&        input_;
-        ReservedWords   reserved_words_;
-        Token           token_;
-        unsigned char   current_char_;
-        TransitionGraph transitionGraph;
-        string          tmp_char_buffer;
+        istream&             input_;
+        ReservedWords        reserved_words_;
+        Token                token_;
+        unsigned char        current_char_;
+        TransitionGraph      transitionGraph;
+        string               tmp_char_buffer;
+        LexerSemanticCommand semanticCommand;
 
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {
             cout << "Lexer constructed" << endl;
+            semanticCommand.command();
             initReservedWords();
+            createTransitionGraph();
         }
 
         Token& getNextToken();
 
         void runParse() {
+            //unsigned char chr = getNextChar();
         }
 
     private: 
@@ -84,6 +95,24 @@ class Lexer {
             chr = std::tolower(chr, loc);
             return chr;
         }
+
+        /*bool isCharacter(unsigned char chr) {
+            if (chr >= 'a' && chr <= 'z') {
+                return true;
+            }
+
+            if (chr >= 'A' && chr <= 'Z') {
+                return true;
+            }
+            return false;
+        }
+
+        bool isDigit(unsigned char chr) {
+            if (chr >= '0' && chr <= '9') {
+                return true;
+            } 
+            return false;
+        }*/
 
         void createTransitionGraph() {
             // Form an finite state machine

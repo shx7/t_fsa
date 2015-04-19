@@ -6,7 +6,7 @@ TRANSITION_GRAPH_DIR=./tr_graph
 TRANSITION_GRAPH_OBJS=$(TRANSITION_GRAPH_DIR)/TransitionGraph.o $(TRANSITION_GRAPH_DIR)/StateNode.o
 
 LEXER_DIR=./lexer
-LEXER_OBJS=$(LEXER_DIR)/Lexer.o
+LEXER_OBJS=$(LEXER_DIR)/Lexer.o $(LEXER_DIR)/LexerSemanticCommand.o
 
 ENGINE_DIR=./engine
 ENGINE_OBJS=$(ENGINE_DIR)/Engine.o

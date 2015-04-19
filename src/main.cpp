@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "TransitionGraph.h"
+#include "Lexer.h"
 #include "Engine.h"
 #include <vector>
 
@@ -9,14 +10,14 @@ using namespace std;
 void test_1(void);
 void test_2();
 void test_3();
+void test_4();
 
 void print_1(unsigned char input) {
     cout << "PRINT! \'" << input << "\'" <<  endl;
 }
 
 int main(int argc, char** argv) {
-    test_3();
-    //void (*entry)(void);
+    test_4();
     return 0;
 }
 
@@ -79,4 +80,8 @@ void test_3() {
     input.push_back(0);
     EngineReport report = engine.run(graph, input);
     report.print();
+}
+
+void test_4() {
+    LexerSemanticCommand cmd;
 }
