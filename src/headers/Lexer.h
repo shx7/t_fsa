@@ -12,8 +12,11 @@
 #include <fstream>
 #include <map>
 #include <iostream>
+#include "LexerTypes.h"
 #include "TransitionGraph.h"
 #include "CharacterAccumulateCommand.h"
+#include "LexerControlCommand.h"
+#include "Engine.h"
 
 #define DEFINE_STATE(name, type) \
     State name (#name, type);
@@ -32,26 +35,6 @@
 
 using namespace std;
 
-enum LexemType {
-    L_AUTOMATON,
-    L_STATE,
-    L_FINAL,
-    L_START,
-    L_OPEN_PARENTHESIS,
-    L_CLOSING_PARENTHESIS,
-    L_TRANSITION,
-    L_SEMICOLON,
-    L_IDENTIFIER,
-    L_CHAR,
-    L_ILLEGAL,
-    L_NOT_RECOGNIZED,
-};
-
-struct Token {
-    LexemType type_;
-    void      *data_;
-};
-
 typedef std::map<std::string, LexemType> ReservedWords;
 
 class Lexer {
@@ -63,6 +46,10 @@ class Lexer {
         TransitionGraph      transitionGraph;
         string               tmp_char_buffer;
 
+        // Semantics cmd
+        CharacterAccumulateCommand characterAccumulateCmd;
+        LexerControlCommand        lexerWordControlCmd;
+
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {
             cout << "Lexer constructed" << endl;
@@ -73,7 +60,16 @@ class Lexer {
         Token& getNextToken();
 
         void runParse() {
-            //unsigned char chr = getNextChar();
+            // Run test
+            InputSequence input;
+            input.push_back('a');
+            input.push_back('S');
+            input.push_back(' ');
+            input.push_back(0); 
+
+            Engine engine; 
+            EngineReport report = engine.run(transitionGraph, input);
+            report.print();
         }
 
     private: 
@@ -94,34 +90,18 @@ class Lexer {
             return chr;
         }
 
-        /*bool isCharacter(unsigned char chr) {
-            if (chr >= 'a' && chr <= 'z') {
-                return true;
-            }
-
-            if (chr >= 'A' && chr <= 'Z') {
-                return true;
-            }
-            return false;
-        }
-
-        bool isDigit(unsigned char chr) {
-            if (chr >= '0' && chr <= '9') {
-                return true;
-            } 
-            return false;
-        }*/
-
         void createTransitionGraph() {
             // Form an finite state machine
             DEFINE_STATE(start_st, STATE_START);
 
             // Any word. Will be preprocessed later
             DEFINE_STATE(word_st, STATE_ORDINARY);
-            ADD_TRANSITION_P(start_st, P_CHARACTER, word_st);
-            ADD_TRANSITION_P(word_st, P_CHARACTER, word_st);
-            ADD_TRANSITION_P(word_st, P_DIGIT, word_st);
-            ADD_TRANSITION_P(word_st, P_WHITE, start_st);
+            ADD_TRANSITION_SEM_P(start_st, P_CHARACTER, word_st, characterAccumulateCmd);
+            ADD_TRANSITION_SEM_P(word_st, P_CHARACTER, word_st, characterAccumulateCmd);
+            ADD_TRANSITION_SEM_P(word_st, P_DIGIT, word_st, characterAccumulateCmd);
+            lexerWordControlCmd.assotiateWithLexer(this);
+            lexerWordControlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
+            ADD_TRANSITION_SEM_P(word_st, P_WHITE, start_st, lexerWordControlCmd);
 
             // L_OPEN_PARENTETHIS lexem
             DEFINE_STATE(opt_st, STATE_ORDINARY);

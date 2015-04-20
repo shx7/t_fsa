@@ -18,7 +18,7 @@ void print_1(unsigned char input) {
 }
 
 int main(int argc, char** argv) {
-    test_3();
+    test_4();
     return 0;
 }
 
@@ -78,12 +78,13 @@ void test_3() {
     InputSequence input;
     input.push_back('a');
     input.push_back('S');
-    input.push_back('}');
+    input.push_back(' ');
     input.push_back(0);
     EngineReport report = engine.run(graph, input);
     report.print();
 }
 
 void test_4() {
-    LexerSemanticCommand cmd;
+    Lexer lexer(cin);
+    lexer.runParse();
 }
