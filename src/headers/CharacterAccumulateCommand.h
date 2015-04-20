@@ -1,6 +1,6 @@
 /**************************************************************
 *
-*   PURPOSE: Contains logic for semantic in lexer automaton
+*   PURPOSE: Semantic for Lexer automaton.
 *
 **************************************************************/
 #ifndef CHARACTER_ACCUMULATOR_SEMANTIC_COMMAND
@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class CharacterAccumuleCommand : public SemanticCommand {
+class CharacterAccumulateCommand : public SemanticCommand {
     private:
         string buffer;
 
