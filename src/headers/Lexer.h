@@ -13,7 +13,7 @@
 #include <map>
 #include <iostream>
 #include "TransitionGraph.h"
-#include "LexerSemanticCommand.h"
+#include "CharacterAccumulateCommand.h"
 
 #define DEFINE_STATE(name, type) \
     State name (#name, type);
@@ -62,7 +62,6 @@ class Lexer {
         unsigned char        current_char_;
         TransitionGraph      transitionGraph;
         string               tmp_char_buffer;
-        LexerSemanticCommand semanticCommand;
 
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {

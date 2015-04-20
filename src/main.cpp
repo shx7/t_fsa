@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "TransitionGraph.h"
+#include "LexerSemanticCommand.h"
 #include "Lexer.h"
 #include "Engine.h"
 #include <vector>
