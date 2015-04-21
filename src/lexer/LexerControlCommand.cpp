@@ -10,7 +10,7 @@ void LexerControlCommand::command(unsigned char input) {
             cout << "LexerControlCommand::command() LEXEM has been recognized! value:" << endl;
             cout << "\"" << ((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer() << "\"" << endl;
             str_token_data = (((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer());
-            token.type_ = L_IDENTIFIER;
+            token.type_ = lexer_->parseLexemType(str_token_data);
             token.data_ = new string(str_token_data); // Potential memory leak
             lexer_->pushToken(token);
             ((CharacterAccumulateCommand *)(assotiatedCmd_))->clearBuffer();

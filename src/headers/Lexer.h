@@ -73,6 +73,16 @@ class Lexer {
             input.push_back('s');
             input.push_back('a');
             input.push_back('k');
+            input.push_back(' ');
+            input.push_back('a');
+            input.push_back('u');
+            input.push_back('t');
+            input.push_back('o');
+            input.push_back('m');
+            input.push_back('a');
+            input.push_back('t');
+            input.push_back('o');
+            input.push_back('n');
             input.push_back(0); 
 
             Engine engine; 
@@ -154,7 +164,7 @@ class Lexer {
         }
 
         void initReservedWords() {
-            reserved_words_["automata"] = L_AUTOMATON;
+            reserved_words_["automaton"] = L_AUTOMATON;
             reserved_words_["state"] = L_STATE;
             reserved_words_["final"] = L_FINAL;
             reserved_words_["start"] = L_START;
@@ -163,6 +173,16 @@ class Lexer {
             reserved_words_["}"] = L_CLOSING_PARENTHESIS;
             reserved_words_["=>"] = L_TRANSITION;
             reserved_words_[";"] = L_SEMICOLON;
+        }
+
+        LexemType parseLexemType(string& word) {
+        #ifdef LEXER_DEBUG
+            cout << "Lexer:::parseLexemType()" << endl;
+        #endif
+            if (reserved_words_.find(word) != reserved_words_.end()) {
+                return reserved_words_[word];
+            }
+            return L_IDENTIFIER;
         }
 
         bool match(LexemType) {

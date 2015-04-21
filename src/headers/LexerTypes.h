@@ -38,6 +38,44 @@ struct Token {
                 cout << "data_:\"" << *((string *)(data_)) << "\"" << endl;
                 break;
 
+            case L_AUTOMATON:
+                cout << "L_AUTOMATON" << endl;
+                cout << "data_:\"" << *((string *)(data_)) << "\"" << endl;
+                break; 
+
+            case L_CHAR:
+                cout << "L_CHAR" << endl;
+                cout << "data_:\"" << *((char *)(data_)) << "\"" << endl;
+                break; 
+
+            case L_SEMICOLON:
+                cout << "L_SEMICOLON" << endl;
+                break; 
+
+            case L_TRANSITION:
+                cout << "L_TRANSITION" << endl;
+                break; 
+
+            case L_OPEN_PARENTHESIS:
+                cout << "L_OPEN_PARENTHESIS" << endl;
+                break; 
+
+            case L_CLOSING_PARENTHESIS:
+                cout << "L_CLOSING_PARENTHESIS" << endl;
+                break; 
+
+            case L_START:
+                cout << "L_START" << endl;
+                break; 
+
+            case L_FINAL:
+                cout << "L_FINAL" << endl;
+                break; 
+
+            case L_STATE:
+                cout << "L_STATE" << endl;
+                break; 
+
             case L_ILLEGAL:
                 cout << "L_ILLEGAL" << endl;
                 break;
