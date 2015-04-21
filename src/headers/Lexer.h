@@ -73,7 +73,6 @@ class Lexer {
             input.push_back('s');
             input.push_back('a');
             input.push_back('k');
-            input.push_back(' ');
             input.push_back(0); 
 
             Engine engine; 

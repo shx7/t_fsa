@@ -8,6 +8,11 @@ EngineReport Engine::run(TransitionGraph& graph, InputSequence& input) {
         step();
         current_character_ = getNextCharacter();
     }
+
+    // Process NULL_CHARACTER
+    cout << "ENGINE: current character \"" << current_character_ << "\"" << endl;
+    step();
+
     return formReport();
 }
 
