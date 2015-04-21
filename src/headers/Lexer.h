@@ -53,9 +53,10 @@ class Lexer {
         // Semantics cmd
         friend LexerControlCommand;
         CharacterAccumulateCommand characterAccumulateCmd;
-        LexerControlCommand        wordCtrlCmd;
+        LexerControlCommand        wordCtrlCmd;               // L_IDENTIFIER or all reserved words
         LexerControlCommand        openParenthesisCtrlCmd;    // L_OPEN_PARENTHESIS
         LexerControlCommand        closingParenthesisCtrlCmd; // L_CLOSING_PARENTHESIS
+        LexerControlCommand        transitionCtrlCmd;         // L_TRANSITION
         NullSemanticCommand        nullCmd;
 
     public:
@@ -88,6 +89,8 @@ class Lexer {
             input.push_back('n');
             input.push_back(' '); 
             input.push_back('{');
+            input.push_back(' '); 
+            input.push_back(' '); 
             input.push_back('}');
             input.push_back('=');
             input.push_back('>');
@@ -139,6 +142,7 @@ class Lexer {
         void createTransitionGraph() {
             // Form an finite state machine
             DEFINE_STATE(start_st, STATE_START);
+            ADD_TRANSITION_P(start_st, P_WHITE, start_st);
 
             // Any word. Will be preprocessed later
             DEFINE_STATE(word_st, STATE_ORDINARY);
@@ -161,11 +165,11 @@ class Lexer {
             ADD_TRANSITION_SEM(start_st, '}', start_st, closingParenthesisCtrlCmd);
 
             // L_TRANSITION lexem
+            transitionCtrlCmd.assotiateWithLexer(this);
+            transitionCtrlCmd.assotiateWithCommand(&nullCmd, L_TRANSITION);
             DEFINE_STATE(trans_st1, STATE_ORDINARY);
-            DEFINE_STATE(trans_st2, STATE_ORDINARY);
             ADD_TRANSITION(start_st, '=', trans_st1);
-            ADD_TRANSITION(trans_st1, '>', trans_st2);
-            ADD_TRANSITION_P(trans_st2, P_WHITE, start_st);
+            ADD_TRANSITION_SEM(trans_st1, '>', start_st, transitionCtrlCmd);
             
             // L_SEMICOLON lexem
             DEFINE_STATE(semicolon_st, STATE_ORDINARY);

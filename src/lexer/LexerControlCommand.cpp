@@ -28,6 +28,12 @@ void LexerControlCommand::command(unsigned char input) {
             lexer_->pushToken(token);
             break;
 
+        case L_TRANSITION:
+            cout << "LexerControlCommand::command() LEXEM has been recognized: L_TRANSITION" << endl;
+            token.type_ = L_TRANSITION;
+            lexer_->pushToken(token);
+            break;
+
 
         default:
             cerr << "LexerControlCommand::command() ERROR: unknown LexemType" << endl;
