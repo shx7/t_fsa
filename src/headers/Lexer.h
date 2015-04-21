@@ -58,6 +58,7 @@ class Lexer {
         LexerControlCommand        closingParenthesisCtrlCmd; // L_CLOSING_PARENTHESIS
         LexerControlCommand        transitionCtrlCmd;         // L_TRANSITION
         LexerControlCommand        semicolonCtrlCmd;          // L_SEMICOLON
+        LexerControlCommand        charCtrlCmd;               // L_CHAR
         NullSemanticCommand        nullCmd;
 
     public:
@@ -76,8 +77,14 @@ class Lexer {
             input.push_back('S');
             input.push_back(';');
             input.push_back(' ');
+            input.push_back('\'');
+            input.push_back('a');
+            input.push_back('\'');
+            input.push_back(' ');
             input.push_back('s');
             input.push_back('a');
+            input.push_back('9');
+            input.push_back('1');
             input.push_back('k');
             input.push_back(' ');
             input.push_back('a');
@@ -90,6 +97,17 @@ class Lexer {
             input.push_back('o');
             input.push_back('n');
             input.push_back(' '); 
+            input.push_back(' '); 
+            input.push_back(' '); 
+            input.push_back(' '); 
+            input.push_back(' '); 
+            input.push_back(' '); 
+            input.push_back(' '); 
+            input.push_back('s'); 
+            input.push_back('t'); 
+            input.push_back('a'); 
+            input.push_back('r'); 
+            input.push_back('t'); 
             input.push_back('{');
             input.push_back(' '); 
             input.push_back(' '); 
@@ -147,12 +165,12 @@ class Lexer {
             ADD_TRANSITION_P(start_st, P_WHITE, start_st);
 
             // Any word. Will be preprocessed later
+            wordCtrlCmd.assotiateWithLexer(this);
+            wordCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
             DEFINE_STATE(word_st, STATE_ORDINARY);
             ADD_TRANSITION_SEM_P(start_st, P_CHARACTER, word_st, characterAccumulateCmd);
             ADD_TRANSITION_SEM_P(word_st, P_CHARACTER, word_st, characterAccumulateCmd);
             ADD_TRANSITION_SEM_P(word_st, P_DIGIT, word_st, characterAccumulateCmd);
-            wordCtrlCmd.assotiateWithLexer(this);
-            wordCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
             ADD_TRANSITION_SEM_P(word_st, P_WHITE, start_st, wordCtrlCmd);
             ADD_TRANSITION_SEM(word_st, ';', start_st, wordCtrlCmd);
             ADD_TRANSITION_SEM(word_st, '{', start_st, wordCtrlCmd);
@@ -178,6 +196,16 @@ class Lexer {
             semicolonCtrlCmd.assotiateWithLexer(this);
             semicolonCtrlCmd.assotiateWithCommand(&nullCmd, L_SEMICOLON);
             ADD_TRANSITION_SEM(start_st, ';', start_st, semicolonCtrlCmd); 
+
+            // L_CHAR lexem
+            charCtrlCmd.assotiateWithLexer(this);
+            charCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_CHAR);
+            DEFINE_STATE(chr_st_0, STATE_ORDINARY);
+            DEFINE_STATE(chr_st_1, STATE_ORDINARY);
+            ADD_TRANSITION(start_st, '\'', chr_st_0);
+            ADD_TRANSITION_SEM_P(chr_st_0, P_CHARACTER, chr_st_1, characterAccumulateCmd);
+            ADD_TRANSITION_SEM_P(chr_st_0, P_DIGIT, chr_st_1, characterAccumulateCmd);
+            ADD_TRANSITION_SEM(chr_st_1, '\'', start_st, charCtrlCmd); 
         }
 
         void initReservedWords() {

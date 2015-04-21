@@ -10,7 +10,6 @@ void LexerControlCommand::command(unsigned char input) {
             cout << "LexerControlCommand::command() LEXEM has been recognized! value:" << endl;
             cout << "\"" << ((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer() << "\"" << endl;
             str_token_data = (((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer());
-            cout << "Back character: " << str_token_data.back() << endl;
 
             // Parse L_IDENTIFIER or another reserved word
             token.type_ = lexer_->parseLexemType(str_token_data);
@@ -30,8 +29,19 @@ void LexerControlCommand::command(unsigned char input) {
                 cout << "LexerControlCommand::command() LEXEM has been L_IDENTIFIER + L_OPEN_PARENTHESIS" << endl;
                 token.type_ = L_OPEN_PARENTHESIS;
                 lexer_->pushToken(token);
-                str_token_data.pop_back();
             } 
+            break;
+
+        case L_CHAR:
+            cout << "LexerControlCommand::command() LEXEM has been recognized: L_CHAR, value:" << endl;
+            str_token_data = (((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer());
+            cout << "\'" << str_token_data << "\'" << endl;
+
+            token.type_ = L_CHAR;
+            token.data_ = new char[1];
+            *((char *)(token.data_)) = str_token_data.front();
+            lexer_->pushToken(token);
+            ((CharacterAccumulateCommand *)(assotiatedCmd_))->clearBuffer();
             break;
 
         case L_OPEN_PARENTHESIS:

@@ -45,7 +45,7 @@ struct Token {
 
             case L_CHAR:
                 cout << "L_CHAR" << endl;
-                cout << "data_:\"" << *((char *)(data_)) << "\"" << endl;
+                cout << "data_:\"" << (*(char *)(data_)) << "\"" << endl;
                 break; 
 
             case L_SEMICOLON:
