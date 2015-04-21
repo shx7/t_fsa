@@ -1,6 +1,6 @@
 CC=g++
 INCLUDE_DIR=../headers
-CFLAGS=-I $(INCLUDE_DIR) -c
+CFLAGS=-I $(INCLUDE_DIR) -c -std=c++11
 SEMANTIC_CMDS=CharacterAccumulateCommand.cpp LexerSemanticCommand.cpp LexerControlCommand.cpp
 
 all: lexer lexer_sem

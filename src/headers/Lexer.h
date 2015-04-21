@@ -74,7 +74,6 @@ class Lexer {
             InputSequence input;
             input.push_back('a');
             input.push_back('S');
-            input.push_back(' ');
             input.push_back(';');
             input.push_back(' ');
             input.push_back('s');
@@ -155,9 +154,10 @@ class Lexer {
             wordCtrlCmd.assotiateWithLexer(this);
             wordCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
             ADD_TRANSITION_SEM_P(word_st, P_WHITE, start_st, wordCtrlCmd);
+            ADD_TRANSITION_SEM(word_st, ';', start_st, wordCtrlCmd);
+            ADD_TRANSITION_SEM(word_st, '{', start_st, wordCtrlCmd);
 
             // L_OPEN_PARENTHESIS lexem
-            //DEFINE_STATE(opt_st, STATE_ORDINARY);
             openParenthesisCtrlCmd.assotiateWithLexer(this);
             openParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_OPEN_PARENTHESIS);
             ADD_TRANSITION_SEM(start_st, '{', start_st, openParenthesisCtrlCmd);
