@@ -53,7 +53,10 @@ class Lexer {
         // Semantics cmd
         friend LexerControlCommand;
         CharacterAccumulateCommand characterAccumulateCmd;
-        LexerControlCommand        lexerWordControlCmd;
+        LexerControlCommand        wordCtrlCmd;
+        LexerControlCommand        openParenthesisCtrlCmd;    // L_OPEN_PARENTHESIS
+        LexerControlCommand        closingParenthesisCtrlCmd; // L_CLOSING_PARENTHESIS
+        NullSemanticCommand        nullCmd;
 
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {
@@ -83,6 +86,11 @@ class Lexer {
             input.push_back('t');
             input.push_back('o');
             input.push_back('n');
+            input.push_back(' '); 
+            input.push_back('{');
+            input.push_back('}');
+            input.push_back('=');
+            input.push_back('>');
             input.push_back(0); 
 
             Engine engine; 
@@ -137,25 +145,26 @@ class Lexer {
             ADD_TRANSITION_SEM_P(start_st, P_CHARACTER, word_st, characterAccumulateCmd);
             ADD_TRANSITION_SEM_P(word_st, P_CHARACTER, word_st, characterAccumulateCmd);
             ADD_TRANSITION_SEM_P(word_st, P_DIGIT, word_st, characterAccumulateCmd);
-            lexerWordControlCmd.assotiateWithLexer(this);
-            lexerWordControlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
-            ADD_TRANSITION_SEM_P(word_st, P_WHITE, start_st, lexerWordControlCmd);
+            wordCtrlCmd.assotiateWithLexer(this);
+            wordCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
+            ADD_TRANSITION_SEM_P(word_st, P_WHITE, start_st, wordCtrlCmd);
 
-            // L_OPEN_PARENTETHIS lexem
-            DEFINE_STATE(opt_st, STATE_ORDINARY);
-            ADD_TRANSITION(start_st, '{', opt_st);
-            ADD_TRANSITION_P(opt_st, P_WHITE, start_st);
+            // L_OPEN_PARENTHESIS lexem
+            //DEFINE_STATE(opt_st, STATE_ORDINARY);
+            openParenthesisCtrlCmd.assotiateWithLexer(this);
+            openParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_OPEN_PARENTHESIS);
+            ADD_TRANSITION_SEM(start_st, '{', start_st, openParenthesisCtrlCmd);
 
             // L_CLOSING_PARENTHESIS lexem
-            DEFINE_STATE(cpt_st, STATE_ORDINARY);
-            ADD_TRANSITION(start_st, '}', cpt_st);
-            ADD_TRANSITION_P(cpt_st, P_WHITE, start_st);
+            closingParenthesisCtrlCmd.assotiateWithLexer(this);
+            closingParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_CLOSING_PARENTHESIS);
+            ADD_TRANSITION_SEM(start_st, '}', start_st, closingParenthesisCtrlCmd);
 
             // L_TRANSITION lexem
             DEFINE_STATE(trans_st1, STATE_ORDINARY);
             DEFINE_STATE(trans_st2, STATE_ORDINARY);
             ADD_TRANSITION(start_st, '=', trans_st1);
-            ADD_TRANSITION(trans_st1, '=', trans_st2);
+            ADD_TRANSITION(trans_st1, '>', trans_st2);
             ADD_TRANSITION_P(trans_st2, P_WHITE, start_st);
             
             // L_SEMICOLON lexem

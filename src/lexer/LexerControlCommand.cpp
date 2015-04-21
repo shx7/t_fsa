@@ -16,6 +16,19 @@ void LexerControlCommand::command(unsigned char input) {
             ((CharacterAccumulateCommand *)(assotiatedCmd_))->clearBuffer();
             break;
 
+        case L_OPEN_PARENTHESIS:
+            cout << "LexerControlCommand::command() LEXEM has been recognized: L_OPEN_PARENTHESIS" << endl;
+            token.type_ = L_OPEN_PARENTHESIS;
+            lexer_->pushToken(token);
+            break;
+
+        case L_CLOSING_PARENTHESIS:
+            cout << "LexerControlCommand::command() LEXEM has been recognized: L_CLOSING_PARENTHESIS" << endl;
+            token.type_ = L_CLOSING_PARENTHESIS;
+            lexer_->pushToken(token);
+            break;
+
+
         default:
             cerr << "LexerControlCommand::command() ERROR: unknown LexemType" << endl;
     }
