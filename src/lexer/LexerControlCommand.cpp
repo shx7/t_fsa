@@ -13,6 +13,7 @@ void LexerControlCommand::command(unsigned char input) {
             token.type_ = L_IDENTIFIER;
             token.data_ = new string(str_token_data); // Potential memory leak
             lexer_->pushToken(token);
+            ((CharacterAccumulateCommand *)(assotiatedCmd_))->clearBuffer();
             break;
 
         default:

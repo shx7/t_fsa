@@ -35,6 +35,7 @@ struct Token {
         switch(type_) {
             case L_IDENTIFIER:
                 cout << "L_IDENTIFIER" << endl;
+                cout << "data_:\"" << *((string *)(data_)) << "\"" << endl;
                 break;
 
             case L_ILLEGAL:
