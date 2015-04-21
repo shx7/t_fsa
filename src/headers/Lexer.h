@@ -57,6 +57,7 @@ class Lexer {
         LexerControlCommand        openParenthesisCtrlCmd;    // L_OPEN_PARENTHESIS
         LexerControlCommand        closingParenthesisCtrlCmd; // L_CLOSING_PARENTHESIS
         LexerControlCommand        transitionCtrlCmd;         // L_TRANSITION
+        LexerControlCommand        semicolonCtrlCmd;          // L_SEMICOLON
         NullSemanticCommand        nullCmd;
 
     public:
@@ -73,6 +74,8 @@ class Lexer {
             InputSequence input;
             input.push_back('a');
             input.push_back('S');
+            input.push_back(' ');
+            input.push_back(';');
             input.push_back(' ');
             input.push_back('s');
             input.push_back('a');
@@ -172,8 +175,9 @@ class Lexer {
             ADD_TRANSITION_SEM(trans_st1, '>', start_st, transitionCtrlCmd);
             
             // L_SEMICOLON lexem
-            DEFINE_STATE(semicolon_st, STATE_ORDINARY);
-            ADD_TRANSITION(start_st, ';', semicolon_st); 
+            semicolonCtrlCmd.assotiateWithLexer(this);
+            semicolonCtrlCmd.assotiateWithCommand(&nullCmd, L_SEMICOLON);
+            ADD_TRANSITION_SEM(start_st, ';', start_st, semicolonCtrlCmd); 
         }
 
         void initReservedWords() {

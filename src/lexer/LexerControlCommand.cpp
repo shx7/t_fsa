@@ -34,6 +34,11 @@ void LexerControlCommand::command(unsigned char input) {
             lexer_->pushToken(token);
             break;
 
+        case L_SEMICOLON:
+            cout << "LexerControlCommand::command() LEXEM has been recognized: L_SEMICOLON" << endl;
+            token.type_ = L_SEMICOLON;
+            lexer_->pushToken(token);
+            break;
 
         default:
             cerr << "LexerControlCommand::command() ERROR: unknown LexemType" << endl;

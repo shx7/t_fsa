@@ -31,7 +31,7 @@ struct Token {
     Token() : type_(L_ILLEGAL), data_(NULL) {}; 
 
     void print() {
-        cout << "Token::print() type_:" << endl;
+        cout << "Token::print() type:" << endl;
         switch(type_) {
             case L_IDENTIFIER:
                 cout << "L_IDENTIFIER" << endl;
