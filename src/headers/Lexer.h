@@ -18,6 +18,8 @@
 #include "LexerControlCommand.h"
 #include "Engine.h"
 
+#define LEXER_DEBUG
+
 #define DEFINE_STATE(name, type) \
     State name (#name, type);
 
@@ -36,17 +38,20 @@
 using namespace std;
 
 typedef std::map<std::string, LexemType> ReservedWords;
+typedef std::vector<Token> TokenContainer;
 
 class Lexer {
     private:
         istream&             input_;
         ReservedWords        reserved_words_;
         Token                token_;
+        TokenContainer       tokenContainer_;
         unsigned char        current_char_;
         TransitionGraph      transitionGraph;
         string               tmp_char_buffer;
 
         // Semantics cmd
+        friend LexerControlCommand;
         CharacterAccumulateCommand characterAccumulateCmd;
         LexerControlCommand        lexerWordControlCmd;
 
@@ -73,6 +78,23 @@ class Lexer {
         }
 
     private: 
+
+        void pushToken(Token& token) {
+        #ifdef LEXER_DEBUG 
+            cout << "Lexer::pushToken()" << endl; 
+        #endif
+            tokenContainer_.push_back(token);
+        }
+
+        #ifdef LEXER_DEBUG
+        void printTokenContainer() {
+            TokenContainer::iterator itr;
+            for (itr = tokenContainer_.begin(); itr != tokenContainer_.end(); itr++) {
+                (*itr).print();
+            }
+        }
+        #endif
+
         void skipSubstractedChars() {
             cout << "SkippingSubstracted" << endl;
             current_char_ = getNextChar();

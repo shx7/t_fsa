@@ -5,6 +5,9 @@
 **************************************************************/
 #ifndef LEXER_TYPES
 #define LEXER_TYPES
+#include <iostream>
+
+using namespace std;
 
 enum LexemType {
     L_AUTOMATON,
@@ -24,6 +27,24 @@ enum LexemType {
 struct Token {
     LexemType type_;
     void      *data_;
+
+    Token() : type_(L_ILLEGAL), data_(NULL) {}; 
+
+    void print() {
+        cout << "Token::print() type_:" << endl;
+        switch(type_) {
+            case L_IDENTIFIER:
+                cout << "L_IDENTIFIER" << endl;
+                break;
+
+            case L_ILLEGAL:
+                cout << "L_ILLEGAL" << endl;
+                break;
+
+            default:
+                cout << "default val. Not impl." << endl;
+        }
+    }
 };
 
 #endif
