@@ -131,7 +131,8 @@ void TransitionGraph::print() {
 State* TransitionGraph::getStartState() {
     map<string, StateNode>::iterator itr;
     for (itr = state_node_table_.begin(); itr != state_node_table_.end(); itr++) {
-        if (itr->second.getNodeType() == STATE_START) {
+        if ((itr->second.getNodeType() == STATE_START) ||
+           (itr->second.getNodeType() == STATE_START_FINAL)) {
             return new State(itr->second.getNodeName(), itr->second.getNodeType());
         }
     }

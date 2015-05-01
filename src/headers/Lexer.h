@@ -73,6 +73,7 @@ class Lexer {
         void runParse() {
             // Run test 
             InputSequence input;
+            input_ >> std::noskipws;
             while (!input_.eof()) {
                 char chr;
                 input_ >> chr;

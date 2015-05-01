@@ -41,7 +41,8 @@ void Engine::printCurrentState() {
 EngineReport Engine::formReport() {
     EngineReport report;
     report.finish_state = current_state_; 
-    if (current_state_->type_ == STATE_FINAL) {
+    if ((current_state_->type_ == STATE_FINAL) ||
+       (current_state_->type_ == STATE_START_FINAL)) {
         report.is_sequence_recognized = true;
     } else {
         report.is_sequence_recognized = false;

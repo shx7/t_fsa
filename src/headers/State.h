@@ -20,7 +20,8 @@ typedef unsigned long StateID;
 enum StateType {
     STATE_START,
     STATE_FINAL,
-    STATE_ORDINARY
+    STATE_ORDINARY,
+    STATE_START_FINAL
 };
 
 struct State {
@@ -60,6 +61,9 @@ struct State {
                 case STATE_ORDINARY:
                     cout << "Oridnary";
                     break;
+
+                case STATE_START_FINAL:
+                    cout << "State & Final";
             }
         }
 };
