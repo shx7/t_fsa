@@ -1,4 +1,10 @@
 automaton fst {
     state state1 {
+        'a' => state2;
+        's' => state3;
+        'd' => state4 ;
+    };
+
+    state final state2 {
     };
 }
