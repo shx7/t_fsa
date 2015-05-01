@@ -14,6 +14,7 @@
 #include "TransitionGraph.h"
 #include <vector>
 #include <iostream>
+//#define ENGINE_DEBUG
 
 using namespace std;
 typedef vector<unsigned char> InputSequence;

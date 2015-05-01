@@ -6,6 +6,7 @@
 #ifndef LEXER_TYPES
 #define LEXER_TYPES
 #include <iostream>
+//#define TOKEN_DEBUG
 
 using namespace std;
 
@@ -31,7 +32,9 @@ struct Token {
     Token() : type_(L_ILLEGAL), data_(NULL) {}; 
 
     void print() {
+    #ifdef TOKEN_DEBUG
         cout << "Token::print() type:" << endl;
+    #endif
         switch(type_) {
             case L_IDENTIFIER:
                 cout << "L_IDENTIFIER" << endl;

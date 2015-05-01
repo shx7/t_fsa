@@ -85,6 +85,8 @@ void test_3() {
 }
 
 void test_4() {
+    ifstream st;
+    st.open("test.fa");
     Lexer lexer(cin);
     lexer.runParse();
 }

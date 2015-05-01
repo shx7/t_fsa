@@ -10,6 +10,7 @@
 #include "CharacterAccumulateCommand.h"
 #include "LexerTypes.h"
 #include <iostream>
+//#define LEXER_CONTROL_COMMAND_DEBUG
 
 using namespace std;
 

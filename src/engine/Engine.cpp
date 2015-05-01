@@ -1,16 +1,22 @@
 #include "Engine.h"
 
 EngineReport Engine::run(TransitionGraph& graph, InputSequence& input) {
+#ifdef ENGINE_DEBUG
     cout << "ENGINE:: run()" << endl;
+#endif
     initRun(graph, input);
     while (current_character_ != NULL_CHARACTER) {
-        cout << "ENGINE: current character \"" << current_character_ << "\"" << endl;
+#ifdef ENGINE_DEBUG
+        cout << "ENGINE: current character \"" << current_character_ << "\" = " << (unsigned int)(current_character_) << endl;
+#endif
         step();
         current_character_ = getNextCharacter();
     }
 
     // Process NULL_CHARACTER
+#ifdef ENGINE_DEBUG
     cout << "ENGINE: current character \"" << current_character_ << "\"" << endl;
+#endif
     step();
 
     return formReport();

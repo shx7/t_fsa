@@ -7,7 +7,9 @@ void LexerControlCommand::command(unsigned char input) {
 
     switch (assotiatedCmdType_) {
         case L_IDENTIFIER:
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized! value:" << endl;
+        #endif
             cout << "\"" << ((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer() << "\"" << endl;
             str_token_data = (((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer());
 
@@ -19,21 +21,27 @@ void LexerControlCommand::command(unsigned char input) {
 
             // Check for L_SEMICOLON 
             if (input == ';') { 
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
                 cout << "LexerControlCommand::command() LEXEM has been L_IDENTIFIER + L_SEMICOLON" << endl;
+        #endif
                 token.type_ = L_SEMICOLON;
                 lexer_->pushToken(token);
             }
 
             // Check for L_OPEN_PARENTHESIS
             if (input == '{') { 
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
                 cout << "LexerControlCommand::command() LEXEM has been L_IDENTIFIER + L_OPEN_PARENTHESIS" << endl;
+        #endif
                 token.type_ = L_OPEN_PARENTHESIS;
                 lexer_->pushToken(token);
             } 
             break;
 
         case L_CHAR:
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized: L_CHAR, value:" << endl;
+        #endif
             str_token_data = (((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer());
             cout << "\'" << str_token_data << "\'" << endl;
 
@@ -45,30 +53,40 @@ void LexerControlCommand::command(unsigned char input) {
             break;
 
         case L_OPEN_PARENTHESIS:
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized: L_OPEN_PARENTHESIS" << endl;
+        #endif
             token.type_ = L_OPEN_PARENTHESIS;
             lexer_->pushToken(token);
             break;
 
         case L_CLOSING_PARENTHESIS:
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized: L_CLOSING_PARENTHESIS" << endl;
+        #endif
             token.type_ = L_CLOSING_PARENTHESIS;
             lexer_->pushToken(token);
             break;
 
         case L_TRANSITION:
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized: L_TRANSITION" << endl;
+        #endif
             token.type_ = L_TRANSITION;
             lexer_->pushToken(token);
             break;
 
         case L_SEMICOLON:
+        #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized: L_SEMICOLON" << endl;
+        #endif
             token.type_ = L_SEMICOLON;
             lexer_->pushToken(token);
             break;
 
-        default:
+        default: 
+            token.type_ = L_ILLEGAL;
+            lexer_->pushToken(token);
             cerr << "LexerControlCommand::command() ERROR: unknown LexemType" << endl;
     }
 }
