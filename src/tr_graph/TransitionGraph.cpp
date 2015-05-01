@@ -59,6 +59,7 @@ void TransitionGraph::addTransitionByPredicat(State& start_state,
             addTransition(start_state, '\n', end_state, cmd);
             addTransition(start_state, '\t', end_state, cmd);
             addTransition(start_state, NULL_CHARACTER, end_state, cmd);
+            break;
 
         default:
             cerr << "TransitionGraph::addTransitionByPredicat() unknown predicat" << endl;

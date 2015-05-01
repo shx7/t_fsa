@@ -71,50 +71,14 @@ class Lexer {
         Token& getNextToken();
 
         void runParse() {
-            // Run test
+            // Run test 
             InputSequence input;
-            input.push_back('a');
-            input.push_back('S');
-            input.push_back(';');
-            input.push_back(' ');
-            input.push_back('\'');
-            input.push_back('a');
-            input.push_back('\'');
-            input.push_back(' ');
-            input.push_back('s');
-            input.push_back('a');
-            input.push_back('9');
-            input.push_back('1');
-            input.push_back('k');
-            input.push_back(' ');
-            input.push_back('a');
-            input.push_back('u');
-            input.push_back('t');
-            input.push_back('o');
-            input.push_back('m');
-            input.push_back('a');
-            input.push_back('t');
-            input.push_back('o');
-            input.push_back('n');
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back('s'); 
-            input.push_back('t'); 
-            input.push_back('a'); 
-            input.push_back('r'); 
-            input.push_back('t'); 
-            input.push_back('{');
-            input.push_back(' '); 
-            input.push_back(' '); 
-            input.push_back('}');
-            input.push_back('=');
-            input.push_back('>');
-            input.push_back(0); 
+            while (!input_.eof()) {
+                char chr;
+                input_ >> chr;
+                input.push_back(chr);
+            } 
+            input.push_back(0);
 
             Engine engine; 
             EngineReport report = engine.run(transitionGraph, input);
@@ -164,6 +128,7 @@ class Lexer {
             DEFINE_STATE(start_st, STATE_START);
             ADD_TRANSITION_P(start_st, P_WHITE, start_st);
 
+            cout << "Lexer::createTransitionGraph() add any word" << endl;
             // Any word. Will be preprocessed later
             wordCtrlCmd.assotiateWithLexer(this);
             wordCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
@@ -175,11 +140,13 @@ class Lexer {
             ADD_TRANSITION_SEM(word_st, ';', start_st, wordCtrlCmd);
             ADD_TRANSITION_SEM(word_st, '{', start_st, wordCtrlCmd);
 
+            cout << "Lexer::createTransitionGraph() add L_OPEN_PARENTHESIS" << endl;
             // L_OPEN_PARENTHESIS lexem
             openParenthesisCtrlCmd.assotiateWithLexer(this);
             openParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_OPEN_PARENTHESIS);
             ADD_TRANSITION_SEM(start_st, '{', start_st, openParenthesisCtrlCmd);
 
+            cout << "Lexer::createTransitionGraph() add L_CLOSING_PARENTHESIS" << endl;
             // L_CLOSING_PARENTHESIS lexem
             closingParenthesisCtrlCmd.assotiateWithLexer(this);
             closingParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_CLOSING_PARENTHESIS);
@@ -233,7 +200,6 @@ class Lexer {
         bool match(LexemType) {
             return false;
         } 
-};
-
+}; 
 
 #endif
