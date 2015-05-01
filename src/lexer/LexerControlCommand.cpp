@@ -9,8 +9,8 @@ void LexerControlCommand::command(unsigned char input) {
         case L_IDENTIFIER:
         #ifdef LEXER_CONTROL_COMMAND_DEBUG
             cout << "LexerControlCommand::command() LEXEM has been recognized! value:" << endl;
-        #endif
             cout << "\"" << ((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer() << "\"" << endl;
+        #endif
             str_token_data = (((CharacterAccumulateCommand *)(assotiatedCmd_))->getBuffer());
 
             // Parse L_IDENTIFIER or another reserved word

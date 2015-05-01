@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-#define CHARACTER_ACCUMULATE_COMMAND_DEBUG
+//#define CHARACTER_ACCUMULATE_COMMAND_DEBUG
 
 #ifdef CHARACTER_ACCUMULATE_COMMAND_DEBUG
     #include <iostream>

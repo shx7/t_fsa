@@ -18,7 +18,7 @@
 #include "LexerControlCommand.h"
 #include "Engine.h"
 
-#define LEXER_DEBUG
+//#define LEXER_DEBUG
 
 #define DEFINE_STATE(name, type) \
     State name (#name, type);
@@ -63,7 +63,6 @@ class Lexer {
 
     public:
         explicit Lexer(istream& input) : input_(input), current_char_(0) {
-            cout << "Lexer constructed" << endl;
             initReservedWords();
             createTransitionGraph();
         }
@@ -84,9 +83,8 @@ class Lexer {
             Engine engine; 
             EngineReport report = engine.run(transitionGraph, input);
             report.print();
-        #ifdef LEXER_DEBUG
+
             printTokenContainer();
-        #endif 
         }
 
     private: 
@@ -98,22 +96,10 @@ class Lexer {
             tokenContainer_.push_back(token);
         }
 
-        #ifdef LEXER_DEBUG
         void printTokenContainer() {
             TokenContainer::iterator itr;
             for (itr = tokenContainer_.begin(); itr != tokenContainer_.end(); itr++) {
                 (*itr).print();
-            }
-        }
-        #endif
-
-        void skipSubstractedChars() {
-            cout << "SkippingSubstracted" << endl;
-            current_char_ = getNextChar();
-            cout << "Next chr: '" << current_char_ << "'" << endl;
-            while ((current_char_ == ' ') || (current_char_ == '\t') || (current_char_ == '\n')) {
-                cout << "substracted chr: '" << current_char_ << "'" << endl;
-                current_char_ = getNextChar();
             }
         }
 
@@ -126,10 +112,9 @@ class Lexer {
 
         void createTransitionGraph() {
             // Form an finite state machine
-            DEFINE_STATE(start_st, STATE_START);
+            DEFINE_STATE(start_st, STATE_START_FINAL);
             ADD_TRANSITION_P(start_st, P_WHITE, start_st);
 
-            cout << "Lexer::createTransitionGraph() add any word" << endl;
             // Any word. Will be preprocessed later
             wordCtrlCmd.assotiateWithLexer(this);
             wordCtrlCmd.assotiateWithCommand(&characterAccumulateCmd, L_IDENTIFIER);
@@ -141,13 +126,11 @@ class Lexer {
             ADD_TRANSITION_SEM(word_st, ';', start_st, wordCtrlCmd);
             ADD_TRANSITION_SEM(word_st, '{', start_st, wordCtrlCmd);
 
-            cout << "Lexer::createTransitionGraph() add L_OPEN_PARENTHESIS" << endl;
             // L_OPEN_PARENTHESIS lexem
             openParenthesisCtrlCmd.assotiateWithLexer(this);
             openParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_OPEN_PARENTHESIS);
             ADD_TRANSITION_SEM(start_st, '{', start_st, openParenthesisCtrlCmd);
 
-            cout << "Lexer::createTransitionGraph() add L_CLOSING_PARENTHESIS" << endl;
             // L_CLOSING_PARENTHESIS lexem
             closingParenthesisCtrlCmd.assotiateWithLexer(this);
             closingParenthesisCtrlCmd.assotiateWithCommand(&nullCmd, L_CLOSING_PARENTHESIS);
