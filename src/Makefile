@@ -11,12 +11,15 @@ LEXER_OBJS=$(LEXER_DIR)/Lexer.o $(LEXER_DIR)/LexerSemanticCommand.o $(LEXER_DIR)
 ENGINE_DIR=./engine
 ENGINE_OBJS=$(ENGINE_DIR)/Engine.o
 
+PARSER_DIR=./parser
+PARSER_OBJS=$(PARSER_DIR)/Parser.o
+
 all: main
 
-main: lexer transition_graph engine
+main: lexer parser transition_graph engine
 	$(CC) main.cpp $(ENGINE_OBJS) $(LEXER_OBJS) $(TRANSITION_GRAPH_OBJS) $(CFLAGS)
 
-.PHONY: lexer transition_graph engine
+.PHONY: lexer transition_graph engine parser
 lexer:
 	$(MAKE) -C ./lexer
 
@@ -25,6 +28,9 @@ transition_graph:
 
 engine:
 	$(MAKE) -C $(ENGINE_DIR)
+
+parser:
+	$(MAKE) -C $(PARSER_DIR)
 
 run:
 	../bin/t_fsa.elf
