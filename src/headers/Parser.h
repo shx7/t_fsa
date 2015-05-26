@@ -13,11 +13,20 @@
 using namespace std;
 
 class Parser {
-    public:
+    public: 
+        Parser() : error_(false) {};
+
 
     private:
         Lexer           lexer_;
         TransitionGraph transitionGraph_;
+        bool            error_;
+
+        bool see(LexemType lexem);
+
+        bool mustBe(LexemType lexem);
+
+        void reportError(string error_str);
 };
 
 #endif

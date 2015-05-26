@@ -1,49 +1,57 @@
 /**********************************************************
 *
-*   PURPOSE: StateNode contains information about State
+*   PURPOSE: LaStateNode contains information about State
 *            and transition(link) to other state by
-*            concrete input
+*            concrete input. But this StateNode can decide 
+*            which transition to choose by examining
+*            context in which executes, passed by string.
 *
 **********************************************************/
-#ifndef STATE_NODE_H
-#define STATE_NODE_H
+#ifndef LA_STATE_NODE_H
+#define LA_STATE_NODE_H
 
 #include "State.h"
 #include "SemanticCommand.h"
 #include "NullSemanticCommand.h"
 #include <vector>
 #include <iostream>
+#include "StateNode.h"
 
 using namespace std; 
 
-typedef void TransitionEntry(void);
+class LaStateNode : protected StateNode {
+    protected: 
 
-class StateNode {
-    protected:
+        /***********************************************************
+        *
+        *   PURPOSE: This class differs from StateNode::Transition,
+        *            because in LaStateNode we should analyze context
+        *
+        ***********************************************************/
         class Transition {
             public:
-                unsigned char   input_;
-                StateNode       *node_; // End point of transition
+                string          input_;
+                LaStateNode     *node_; // End point of transition
                 SemanticCommand *cmd_;
 
                 Transition() : node_(NULL), input_(NULL_CHARACTER), cmd_(NULL) {}
 
-                Transition(StateNode* node,
-                        unsigned char input,
+                Transition(LaStateNode* node,
+                        string& input,
                         SemanticCommand& cmd) : node_(node), input_(input), cmd_(&cmd) {}
 
-                void callSemantic(unsigned char input) {
+                void callSemantic(string &input) {
                 #ifdef TRANSITION_DEBUG
                     cout << "Transition::callSemantic(\'" << input << "\')" << endl;
                 #endif
                     if (cmd_ != NULL) {
-                        cmd_->command(input);
+                        cmd_->command(input[0]);
                     } 
                 }
 
                 void print() {
                     cout << "Link by character: \'";
-                    if (input_ == NULL_CHARACTER) {
+                    if (input_ == string(NULL_CHARACTER)) {
                         cout << "NULL_CHARACTER";
                     } else {
                         cout << input_;
@@ -60,32 +68,14 @@ class StateNode {
                 }
         };
 
+
     public:
-        StateNode() {} 
+        void addTransition(string &input, LaStateNode* node);
 
-        StateNode(State& state) {
-            setState(state);
-        }
+        void addTransition(string &input,
+            LaStateNode* node,
+            SemanticCommand& cmd);
 
-        void setState(State& state);
-
-        void addTransition(char input, StateNode* node);
-
-        void addTransition(char input,
-                StateNode* node,
-                SemanticCommand& cmd);
-
-        StateNode* getNextNode(char input);
-
-        StateType getNodeType(); 
-
-        string getNodeName();
-
-        void print();
-
-    protected: 
-        State               state_;
-        vector<Transition>  transition_list_;
-        NullSemanticCommand null_semantic_cmd_;
+        LaStateNode* getNextNode(string &input);
 };
 #endif
